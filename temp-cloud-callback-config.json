@@ -1,0 +1,10 @@
+{
+  "enable": true,
+  "callbacks": [
+    {
+      "msgType": 1,
+      "env": "环境名"
+      "functionName": "云函数名"
+    }
+  ]
+}

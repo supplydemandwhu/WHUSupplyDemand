@@ -1,0 +1,17 @@
+<!--pages/sendMessage/sendMessage.wxml-->
+<view class="container">
+
+  <!-- 云开发用户管理指引 -->
+  <view class="guide">
+    <!-- 粗体 -->
+    <text class="headline">消息内容：</text>
+    <view class="section">
+      <form bindsubmit="onAdd">
+        <textarea placeholder="请在此输入消息内容" name="textarea"/>
+        <button size="mini" type="default" form-type="submit"> 提交 </button>
+      </form>
+    </view>
+  </view>
+
+
+</view>

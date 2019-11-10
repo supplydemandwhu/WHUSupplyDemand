@@ -1,0 +1,16 @@
+<!--pages/myMessage/myMessage.wxml-->
+<view class="container">
+
+  <!-- 查询记录 -->
+  <view class="guide">
+    <button size="mini" type="default" bindtap="onQuery">查询记录</button>
+    <view wx:if="{{queryResult}}">
+      <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" class="code">
+        {{item.message}}
+</view>
+    </view>
+    
+
+  </view>
+
+</view>
