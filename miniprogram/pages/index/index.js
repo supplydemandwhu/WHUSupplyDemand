@@ -6,8 +6,8 @@ Page({
     avatarUrl: './user-unlogin.png',
     userInfo: {},
     logged: false,
-    takeSession: false,
-    requestResult: ''
+    kind: -1,
+    queryResult: '',
   },
 
   onLoad: function() {
@@ -42,7 +42,6 @@ Page({
       }
     }),
     
-
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -59,12 +58,15 @@ Page({
         }
       }
     })
+
   },
 
   goToSendMessage: function (param) {
     wx.navigateTo({ url: '../sendMessage/sendMessage', });
   },
-
+  goToMyMessage: function (param) {
+    wx.navigateTo({ url: '../myMessage/myMessage', });
+  },
   onGetUserInfo: function(e) {
     if (!this.data.logged && e.detail.userInfo) {
       this.setData({
@@ -73,6 +75,56 @@ Page({
         userInfo: e.detail.userInfo
       })
     }
+  },
+
+  getSupply: function () {
+    // 获取交易消息
+    const db = wx.cloud.database()
+    // 查询当前用户所有的 counters
+    db.collection('message').get({
+      success: res => {
+        this.setData({
+          queryResult: res.data,
+        })
+        console.log('[数据库] [查询记录] 成功: ', res)
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      }
+    })
+
+    this.setData({
+      kind: 0,
+    })
+  },
+
+  getDemand: function () {
+    // 获取交易消息
+    const db = wx.cloud.database()
+    // 查询当前用户所有的 counters
+    db.collection('message').get({
+      success: res => {
+        this.setData({
+          queryResult: res.data,
+        })
+        console.log('[数据库] [查询记录] 成功: ', res)
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      }
+    })
+
+    this.setData({
+      kind: 1,
+    })
   },
 
 

@@ -1,9 +1,9 @@
 /**app.wxss**/
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
+   display: flex; /*以同一块中上一个子块为基准*/
+  flex-direction: column; /*排成一列*/
+  align-items: center; /*内部块居中*/
+  /* box-sizing: border-box;  */
   background-color: #ddd
 } 
 

@@ -1,12 +1,23 @@
 /**index.wxss**/
 
 page {
-  background: #f6f6f6;
+  /* background: #f6f6f6; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
+.container {
+  position: absolute;
+  width: 100%;
+  top: 0rpx;
+  height: 90%;
 
+   display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box; 
+  background-color: #ddd
+}
 .button {
   width: 100%;
 }
@@ -22,16 +33,16 @@ button{
 .messagebox {
   margin-top: 2%;
   width: 90%;
-  height: 800rpx;
-  background-color:green;
+  height: 80%;
+  background-color: white;
 }
 
-/*
-.message { /*框白色底色
+
+.message { /*框白色底色*/
   margin-top: 20rpx;
   height: 100rpx;
   width: 100%;
-  background: #fff;
+  /* background: #fff; */
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-left: none;
   border-right: none;
@@ -39,16 +50,11 @@ button{
   flex-direction: row;
   align-items: center;
   transition: all 300ms ease;
-}
 
-.message { /*占位符大小
-  height: auto;
   padding: 0 0 0 40rpx;
-  flex-direction: column;
-  align-items: flex-start;
   box-sizing: border-box;
 }
-*/
+
 
 .message-text { /*文本内容*/
   float: left;
@@ -56,4 +62,22 @@ button{
   /*line-height: 52px;*/
   font-size: 34rpx;
   color: #007aff;
+}
+
+.sidebar {
+  position: absolute;
+  bottom: 20rpx;
+  background-color:  white;
+  
+  height: 10%;
+  width: 100%;
+  /* border: 1px solid rgba(0, 0, 0, 0.1); */
+  border-left: none;
+  border-right: none;
+  display: flex; /*显示在一行*/
+  margin: 0;
+  padding:0;
+  /* flex-direction: row; */
+  /* align-items: center; */
+  /*transition: all 300ms ease;*/
 }

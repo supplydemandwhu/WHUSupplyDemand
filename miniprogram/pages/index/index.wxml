@@ -24,22 +24,38 @@
   </view>
   
   
-  <!-- TODO 供需按钮 -->
+  <!-- 供需按钮 -->
   <view class="button">
-    <button style="background-color: red;">供</button>
-    <button style="background-color: blue;">需</button>
+    <button style="background-color: red;" bindtap="getSupply">供</button>
+    <button style="background-color: blue;" bindtap="getDemand">需</button>
     
   </view>
   
 
   <!-- 全部消息列表 -->
-  <view class="messagebox">
-  消息列表
-  </view>
+  <scroll-view class="messagebox" wx:if="{{kind==-1}}"  scroll-y='true'>
+  点击“供”或“需”显示消息
+  </scroll-view>
+  <scroll-view class="messagebox" wx:elif="{{kind==0}}"  scroll-y='true'> <!-- 供给 -->
+    <!-- <view wx:if="{{queryResult}}"> -->
+      <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" class="code">
+        <view wx:if="{{item.kind==false}}" class="message">{{item.message}}</view>
+      </view>
+    <!-- </view> -->
+  </scroll-view>
+  <scroll-view class="messagebox" wx:else  scroll-y='true'>  <!-- 需求 -->
+    <!-- <view wx:if="{{queryResult}}"> -->
+      <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" class="code">
+        <view wx:if="{{item.kind==true}}" class="message">{{item.message}}</view>
+      </view>
+    <!-- </view> -->
+  </scroll-view>
 
+
+</view>
 
   <!-- 下边栏 -->
-  <view class="userinfo">
+  <view class="sidebar">
 
     <button>首页</button>
 
@@ -59,6 +75,6 @@
       bindgetuserinfo="onGetUserInfo"
       class="userinfo-avatar"
       style="background-image: url({{avatarUrl}})"
+      bindtap="goToMyMessage"
     ></button>
   </view>
-</view>
