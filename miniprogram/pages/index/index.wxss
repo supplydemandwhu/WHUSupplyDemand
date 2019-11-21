@@ -1,66 +1,39 @@
 /**index.wxss**/
 
+/* 上边栏 */
+@import "/style/upper-sidebar.wxss";
+
+/* 下边栏 */
+@import "/style/lower-sidebar.wxss";
 page {
   /* background: #f6f6f6; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
-.container {
-  position: absolute;
-  width: 100%;
-  top: 0rpx;
-  height: 90%;
 
-   display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box; 
-  background-color: #ddd
-}
-.button {
-  width: 100%;
-}
-
-button{
-  float: left;
-  width: 45%;
+.upper-button {
+  width: 35%;
   margin-top: 2%;
-  margin-left: 2.5%;
-  margin-right: 2.5%;
+  margin-left: 2%;
+  float: left;
+}
+#button-supply {
+  background-color: red;
+}
+#button-demand {
+  background-color: blue;
+}
+
+#classify {
+  height: 5%;
+
+  background-color: green;
 }
 
 .messagebox {
   margin-top: 2%;
   width: 90%;
-  height: 80%;
+  height: 70%;
   background-color: white;
 }
-
-
-.message { /*框白色底色*/
-  margin-top: 20rpx;
-  height: 100rpx;
-  width: 100%;
-  /* background: #fff; */
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-left: none;
-  border-right: none;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  transition: all 300ms ease;
-
-  padding: 0 0 0 40rpx;
-  box-sizing: border-box;
-}
-
-
-.message-text { /*文本内容*/
-  float: left;
-  width: 30%;
-  /*line-height: 52px;*/
-  font-size: 34rpx;
-  color: #007aff;
-}
-

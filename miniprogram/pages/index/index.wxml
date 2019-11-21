@@ -18,19 +18,26 @@
 
   -->
 
-  <!-- TODO 分类 -->
-  <view>
-  分类待完成
-  </view>
   
   
   <!-- 供需按钮 -->
-  <view class="button">
-    <button style="background-color: red;" bindtap="getSupply">供</button>
-    <button style="background-color: blue;" bindtap="getDemand">需</button>
+  <view id="upper-sidebar">
+    <!-- 用户 头像 -->
+    <button 
+      open-type="getUserInfo" 
+      bindgetuserinfo="onGetUserInfo"
+      id="userinfo-avatar"
+      style="background-image: url({{avatarUrl}})"
+    ></button>
+    <button class="upper-button" id="button-supply" bindtap="getSupply">供</button>
+    <button class="upper-button" id="button-demand" bindtap="getDemand">需</button>
     
   </view>
   
+  <!-- TODO 分类 -->
+  <view id="classify">
+  分类待完成
+  </view>
 
   <!-- 全部消息列表 -->
   <scroll-view class="messagebox" wx:if="{{kind==-1}}"  scroll-y='true'>
@@ -52,15 +59,14 @@
   </scroll-view>
 
 
-</view>
-
   <!-- 下边栏 -->
-  <view class="sidebar">
+  <view id="lower-sidebar">
 
-    <button>首页</button>
+    <button class="lower-button">首页</button>
 
-    <button bindtap="goToSendMessage">发布消息</button>
+    <button class="lower-button" bindtap="goToSendMessage">发布消息</button>
     
+    <button class="lower-button" bindtap="goToMyMessage">我的</button>
     <!--
     <view class="message-text">
     <navigator url="../sendMessage/sendMessage" open-type="navigate">
@@ -69,12 +75,5 @@
     </view>
     -->
 
-    <!-- 用户 openid -->
-    <button 
-      open-type="getUserInfo" 
-      bindgetuserinfo="onGetUserInfo"
-      class="userinfo-avatar"
-      style="background-image: url({{avatarUrl}})"
-      bindtap="goToMyMessage"
-    ></button>
   </view>
+</view>

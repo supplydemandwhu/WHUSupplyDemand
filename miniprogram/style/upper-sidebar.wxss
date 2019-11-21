@@ -1,0 +1,14 @@
+/**upper-sidebar.wxss**/
+#upper-sidebar {
+  width: 100%;
+}
+#userinfo-avatar {
+  float: left;
+  
+  width: 100rpx;
+  height: 100rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+  background-size: cover;
+  background-color: white;
+}
