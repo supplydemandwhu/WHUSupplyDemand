@@ -97,3 +97,22 @@ page {
 .section {
   background: white;
 }
+
+
+.sidebar {
+  position: absolute;
+  bottom: 20rpx;
+  background-color:  white;
+  
+  height: 10%;
+  width: 100%;
+  /* border: 1px solid rgba(0, 0, 0, 0.1); */
+  border-left: none;
+  border-right: none;
+  display: flex; /*显示在一行*/
+  margin: 0;
+  padding:0;
+  /* flex-direction: row; */
+  /* align-items: center; */
+  /*transition: all 300ms ease;*/
+}

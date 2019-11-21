@@ -14,3 +14,27 @@
   </view>
 
 </view>
+
+  <!-- 下边栏 -->
+  <view class="sidebar">
+
+    <button>首页</button>
+
+    <button bindtap="goToSendMessage">发布消息</button>
+    
+    <!--
+    <view class="message-text">
+    <navigator url="../sendMessage/sendMessage" open-type="navigate">
+        <text>发布消息</text>
+    </navigator>
+    </view>
+    -->
+
+    <!-- 用户 openid -->
+    <button 
+      open-type="getUserInfo" 
+      bindgetuserinfo="onGetUserInfo"
+      class="userinfo-avatar"
+      style="background-image: url({{avatarUrl}})"
+    ></button>
+  </view>

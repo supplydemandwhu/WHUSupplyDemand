@@ -48,4 +48,21 @@ Page({
   /*bindFormSubmit: function (e) {
     console.log(e.detail.value.textarea)
   }*/
+
+
+  goToSendMessage: function (param) {
+    wx.navigateTo({ url: '../sendMessage/sendMessage', });
+  },
+  goToMyMessage: function (param) {
+    wx.navigateTo({ url: '../myMessage/myMessage', });
+  },
+  onGetUserInfo: function (e) {
+    if (!this.data.logged && e.detail.userInfo) {
+      this.setData({
+        logged: true,
+        avatarUrl: e.detail.userInfo.avatarUrl,
+        userInfo: e.detail.userInfo
+      })
+    }
+  },
 })
