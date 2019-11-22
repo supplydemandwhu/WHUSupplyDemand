@@ -1,25 +1,6 @@
 <!--index.wxml-->
 <view class="container">
 
-  <!--
-  <!-- 发布消息 
-  <view class="message">
-    <navigator url="../sendMessage/sendMessage" open-type="navigate" class="message-text">
-      <text>发布消息</text>
-    </navigator>
-  </view>
-
-  <!-- 查看自己已发布消息 
-  <view class="message">
-    <navigator url="../myMessage/myMessage" open-type="navigate"  class="message-text">
-      <text>查看自己已发布消息</text>
-    </navigator>
-  </view>
-
-  -->
-
-  
-  
   <!-- 供需按钮 -->
   <view id="upper-sidebar">
     <!-- 用户 头像 -->
@@ -46,14 +27,14 @@
   <scroll-view class="messagebox" wx:elif="{{kind==0}}"  scroll-y='true'> <!-- 供给 -->
     <!-- <view wx:if="{{queryResult}}"> -->
       <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" class="code">
-        <view wx:if="{{item.kind==false}}" class="message">{{item.message}}</view>
+        <view wx:if="{{item.isSupply==true}}" class="message">{{item.message}}</view>
       </view>
     <!-- </view> -->
   </scroll-view>
   <scroll-view class="messagebox" wx:else  scroll-y='true'>  <!-- 需求 -->
     <!-- <view wx:if="{{queryResult}}"> -->
       <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" class="code">
-        <view wx:if="{{item.kind==true}}" class="message">{{item.message}}</view>
+        <view wx:if="{{item.isSupply==false}}" class="message">{{item.message}}</view>
       </view>
     <!-- </view> -->
   </scroll-view>
