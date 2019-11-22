@@ -27,7 +27,7 @@
       open-type="getUserInfo" 
       bindgetuserinfo="onGetUserInfo"
       id="userinfo-avatar"
-      style="background-image: url({{avatarUrl}})"
+      style="background-image: url({{userInfo.avatarUrl}})"
     ></button>
     <button class="upper-button" id="button-supply" bindtap="getSupply">供</button>
     <button class="upper-button" id="button-demand" bindtap="getDemand">需</button>
@@ -62,7 +62,7 @@
   <!-- 下边栏 -->
   <view id="lower-sidebar">
 
-    <button class="lower-button">首页</button>
+    <button class="lower-button" bindtap="goToIndex">首页</button>
 
     <button class="lower-button" bindtap="goToSendMessage">发布消息</button>
     

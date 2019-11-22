@@ -1,3 +1,11 @@
+/**myMessage.wxss**/
+
+/* 上边栏 */
+@import "/style/upper-sidebar.wxss";
+
+/* 下边栏 */
+@import "/style/lower-sidebar.wxss";
+
 page {
   background: #f6f6f6;
   display: flex;

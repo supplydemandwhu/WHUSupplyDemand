@@ -3,9 +3,11 @@ const app = getApp()
 
 Page({
   data: {
-    avatarUrl: './user-unlogin.png',
-    userInfo: {},
+    userInfo: {
+      avatarUrl: '/images/user-unlogin.png',
+    },
     logged: false,
+    openid: '',
     kind: -1,
     queryResult: '',
   },
@@ -27,11 +29,6 @@ Page({
         console.log('[云函数] [login] user openid: ', res.result.openid)
         // 全局数据 openid
         app.globalData.openid = res.result.openid
-        /*
-        wx.navigateTo({ // 跳转
-          url: '../userConsole/userConsole',
-        })
-        */
       },
       fail: err => { // 调用失败
         // 输出错误
@@ -49,10 +46,11 @@ Page({
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
             success: res => {
+              console.log("已授权 直接获取用户信息")
               this.setData({
-                avatarUrl: res.userInfo.avatarUrl,
                 userInfo: res.userInfo
               })
+              app.globalData.userInfo = res.userInfo
             }
           })
         }
@@ -61,6 +59,9 @@ Page({
 
   },
 
+  goToIndex: function (param) {
+    wx.navigateTo({ url: '../index/index', });
+  },
   goToSendMessage: function (param) {
     wx.navigateTo({ url: '../sendMessage/sendMessage', });
   },
@@ -68,12 +69,14 @@ Page({
     wx.navigateTo({ url: '../myMessage/myMessage', });
   },
   onGetUserInfo: function(e) {
+    console.log("弹窗获取信息")
     if (!this.data.logged && e.detail.userInfo) {
       this.setData({
         logged: true,
-        avatarUrl: e.detail.userInfo.avatarUrl,
-        userInfo: e.detail.userInfo
+        userInfo: e.detail.userInfo,
       })
+      // 传递用户信息
+      app.globalData.userInfo = e.detail.userInfo
     }
   },
 
@@ -126,7 +129,5 @@ Page({
       kind: 1,
     })
   },
-
-
 
 })

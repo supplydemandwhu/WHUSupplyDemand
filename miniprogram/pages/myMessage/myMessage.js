@@ -5,6 +5,10 @@ const app = getApp()
 Page({
 
   data: {
+    userInfo: {
+      avatarUrl: '/images/user-unlogin.png',
+    },
+    logged: false,
     openid: '',
     queryResult: '',
   },
@@ -13,14 +17,14 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  // onPullDownRefresh: function () {
 
 
-  },
+  // },
 
-  loadMyMessage: function () {
+  // loadMyMessage: function () {
 
-  },
+  // },
 
 
   onLoad: function (options) {
@@ -28,7 +32,8 @@ Page({
     if (app.globalData.openid) {
 
       this.setData({
-        openid: app.globalData.openid
+        openid: app.globalData.openid,
+        userInfo: app.globalData.userInfo,
       })
 
     }
@@ -58,4 +63,24 @@ Page({
   /*bindFormSubmit: function (e) {
     console.log(e.detail.value.textarea)
   }*/
+
+  onGetUserInfo: function (e) {
+    if (!this.data.logged && e.detail.userInfo) {
+      this.setData({
+        logged: true,
+        // avatarUrl: e.detail.userInfo.avatarUrl,
+        userInfo: e.detail.userInfo
+      })
+    }
+  },
+
+  goToIndex: function (param) {
+    wx.navigateTo({ url: '../index/index', });
+  },
+  goToSendMessage: function (param) {
+    wx.navigateTo({ url: '../sendMessage/sendMessage', });
+  },
+  goToMyMessage: function (param) {
+    wx.navigateTo({ url: '../myMessage/myMessage', });
+  },
 })
