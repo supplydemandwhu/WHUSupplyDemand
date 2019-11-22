@@ -9,41 +9,17 @@
 
     <view class="section">
       <form bindsubmit="onAdd">
-        <view>
           <textarea placeholder="请在此输入消息内容" name="textarea"/>
-        </view>
-        <view class="submit">
+
+          <radio-group class="is-supply-group" bindchange="isSupplyChange">
+              <radio value="supply" checked/>提供
+              <radio value="demand"/>需求
+          </radio-group>
+
           <button size="mini" type="default" form-type="submit"> 提交 </button>
-        </view>
       </form>
     </view>
   </view>
 
 
 </view>
-
-
-  <!-- 下边栏 -->
-  <view class="sidebar">
-
-    <button>首页</button>
-
-    <button bindtap="goToSendMessage">发布消息</button>
-    
-    <!--
-    <view class="message-text">
-    <navigator url="../sendMessage/sendMessage" open-type="navigate">
-        <text>发布消息</text>
-    </navigator>
-    </view>
-    -->
-
-    <!-- 用户 openid -->
-    <button 
-      open-type="getUserInfo" 
-      bindgetuserinfo="onGetUserInfo"
-      class="userinfo-avatar"
-      style="background-image: url({{avatarUrl}})"
-      bindtap="goToMyMessage"
-    ></button>
-  </view>

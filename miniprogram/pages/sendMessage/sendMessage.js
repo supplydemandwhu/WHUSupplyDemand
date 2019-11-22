@@ -6,7 +6,8 @@ Page({
 
   data: {
     openid: '',
-    message: ''
+    message: '',
+    isSupply: true,
   },
 
   onLoad: function (options) {
@@ -20,9 +21,11 @@ Page({
   onAdd: function (e) {
     const db = wx.cloud.database()
     const newMessage = e.detail.value.textarea //this.data.message
+    const newIsSupply = this.data.isSupply
     db.collection('message').add({
       data: {
-        message: newMessage
+        message: newMessage,
+        isSupply: newIsSupply
       },
       success: res => {
         // 在返回结果中会包含新创建的记录的 _id
@@ -45,10 +48,13 @@ Page({
     })
   },
 
-  /*bindFormSubmit: function (e) {
-    console.log(e.detail.value.textarea)
-  }*/
-
+  isSupplyChange: function (e) {
+    this.setData({
+      isSupply: e.detail.value == "supply"
+    })
+    console.log('radio发生change事件，携带value值为：', e.detail.value)
+    console.log(this.data.isSupply)
+  },
 
   goToSendMessage: function (param) {
     wx.navigateTo({ url: '../sendMessage/sendMessage', });
