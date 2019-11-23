@@ -25,10 +25,8 @@ page {
   background-color: blue;
 }
 
-#classify {
+#middle-sidebar {
   height: 5%;
-
-  background-color: green;
 }
 
 .messagebox {

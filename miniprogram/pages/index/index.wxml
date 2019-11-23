@@ -10,33 +10,34 @@
       id="userinfo-avatar"
       style="background-image: url({{userInfo.avatarUrl}})"
     ></button>
-    <button class="upper-button" id="button-supply" bindtap="getSupply">供</button>
-    <button class="upper-button" id="button-demand" bindtap="getDemand">需</button>
+    <view wx:if="{{isIndex==true}}">
+      <button class="upper-button" id="button-supply" bindtap="getSupply">供</button>
+      <button class="upper-button" id="button-demand" bindtap="getDemand">需</button>
+    </view>
     
   </view>
   
   <!-- TODO 分类 -->
-  <view id="classify">
+  <view id="middle-sidebar" wx:if="{{isIndex==true}}">
   分类待完成
+  </view>
+  <view id="middle-sidebar" wx:else>
+    <button size="mini" type="default" bindtap="onQuery">查询记录</button>
   </view>
 
   <!-- 全部消息列表 -->
-  <scroll-view class="messagebox" wx:if="{{kind==-1}}"  scroll-y='true'>
+  <scroll-view class="messagebox" wx:if="{{isIndex==true && isSupply==-1}}"  scroll-y='true'>
   点击“供”或“需”显示消息
   </scroll-view>
-  <scroll-view class="messagebox" wx:elif="{{kind==0}}"  scroll-y='true'> <!-- 供给 -->
-    <!-- <view wx:if="{{queryResult}}"> -->
-      <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" class="code">
-        <view wx:if="{{item.isSupply==true}}" class="message">{{item.message}}</view>
-      </view>
-    <!-- </view> -->
+  <scroll-view class="messagebox" wx:elif="{{isIndex==true}}"  scroll-y='true'> <!-- 供给/需求 -->
+    <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" wx:key="item._id" class="code">
+      <view wx:if="{{item.isSupply==isSupply}}" class="message">{{item.message}}</view>
+    </view>
   </scroll-view>
-  <scroll-view class="messagebox" wx:else  scroll-y='true'>  <!-- 需求 -->
-    <!-- <view wx:if="{{queryResult}}"> -->
-      <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" class="code">
-        <view wx:if="{{item.isSupply==false}}" class="message">{{item.message}}</view>
-      </view>
-    <!-- </view> -->
+  <scroll-view class="messagebox" wx:elif="{{isIndex==false}}"  scroll-y='true'>  <!-- 我的消息 -->
+    <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" wx:key="item._id" class="code">
+      <view class="message">{{item.message}}</view>
+    </view>
   </scroll-view>
 
 
