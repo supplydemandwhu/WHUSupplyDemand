@@ -1,0 +1,29 @@
+<!--miniprogram/pages/detail/detail.wxml-->
+<text>哈哈想不到吧！</text>
+
+
+
+
+   
+<!--详情页  -->
+
+<view>
+
+     <view>{{detail.a1}}</view>  
+
+     <view>{{detail.a2}}</view>  
+
+     <view>{{detail.a3}}</view>  
+
+</view>
+
+ 
+   
+
+
+
+
+
+
+
+ 

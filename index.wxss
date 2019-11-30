@@ -1,0 +1,66 @@
+/**index.wxss**/
+
+/* 上边栏 */
+@import "/style/upper-sidebar.wxss";
+
+/* 下边栏 */
+@import "/style/lower-sidebar.wxss";
+page {
+  /* background: #f6f6f6; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.upper-button {
+  width: 35%;
+  margin-top: 2%;
+  margin-left: 2%;
+  float: left;
+}
+#button-supply {
+  background-color: red;
+}
+#button-demand {
+  background-color: blue;
+}
+
+#classify {
+  height: 5%;
+
+  background-color: green;
+}
+
+.messagebox {
+  margin-top: 2%;
+  width: 90%;
+  height: 70%;
+  background-color: white;
+}
+
+
+.View{
+
+  padding: 20rpx 0;
+
+  margin: 24rpx 0;
+
+  background-color: cyan;
+
+  font-size: 30rpx;
+
+  line-height: 40rpx;
+
+}
+
+ 
+
+.viewNum{
+
+  color: red;
+
+  font-size: 34rpx;
+
+  margin-bottom: 20rpx;
+
+}
