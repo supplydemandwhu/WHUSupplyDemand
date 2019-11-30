@@ -11,25 +11,15 @@
       style="background-image: url({{userInfo.avatarUrl ? userInfo.avatarUrl : '/images/user-unlogin.png'}})"
     ></button>
     <view wx:if="{{isIndex==true}}">
-      <button class="upper-button" id="button-supply" bindtap="getSupply">供</button>
-      <button class="upper-button" id="button-demand" bindtap="getDemand">需</button>
+      <button class="upper-button" id="button-supply" bindtap="getSupply" style="font-weight: {{isSupply==1?'bold':'normal'}}">供</button>
+      <button class="upper-button" id="button-demand" bindtap="getDemand" style="font-weight: {{isSupply==0?'bold':'normal'}}">需</button>
     </view>
     
   </view>
   
   <!-- TODO 分类 -->
   <scroll-view  scroll-x="true" id="middle-scroll-sidebar" wx:if="{{isIndex==true}}">
-    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{0}}">全部</button>
-    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{1}}">旧书</button>
-    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{2}}">二手车</button>
-    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{3}}">工具</button>
-    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{4}}">宿舍用品</button>
-    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{5}}">零食</button>
-    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{6}}">生活用品</button>
-    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{7}}">拼车</button>
-    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{8}}">跑腿</button>
-    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{9}}">打印</button>
-    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{10}}">活动</button>
+      <button wx:for="{{typeName}}" wx:for-index="idx" wx:for-item="itemName" size="mini" type="default" bindtap="chooseType" data-typeid="{{idx}}" style="font-weight: {{typeId==idx?'bold':'normal'}}">{{itemName}}</button>
   </scroll-view>
   <view id="middle-sidebar" wx:else>
     <button size="mini" type="default" bindtap="onQuery">查询记录</button>

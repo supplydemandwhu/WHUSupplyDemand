@@ -1,8 +1,8 @@
 //index.js
 const app = getApp()
-
 Page({
   data: {
+    typeName : ["全部", "旧书", "二手车", "工具", "宿舍用品", "零食", "生活用品", "拼车", "跑腿", "打印", "活动"],
     userInfo: {
       avatarUrl: '/images/user-unlogin.png',
     },
@@ -126,6 +126,7 @@ Page({
   },
 
   chooseType: function (e) {
+    console.log(this.data)
     console.log('选择类型: ', e.currentTarget.dataset.typeid)
     // var newTypeId = e.currentTarget.id
     this.setData({
