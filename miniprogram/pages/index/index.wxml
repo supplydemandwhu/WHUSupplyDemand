@@ -8,7 +8,7 @@
       open-type="getUserInfo" 
       bindgetuserinfo="onGetUserInfo"
       id="userinfo-avatar"
-      style="background-image: url({{userInfo.avatarUrl}})"
+      style="background-image: url({{userInfo.avatarUrl ? userInfo.avatarUrl : '/images/user-unlogin.png'}})"
     ></button>
     <view wx:if="{{isIndex==true}}">
       <button class="upper-button" id="button-supply" bindtap="getSupply">供</button>
@@ -18,20 +18,19 @@
   </view>
   
   <!-- TODO 分类 -->
-  <scroll-view  scroll-x="true" style="width: 100%" id="middle-scroll-sidebar" wx:if="{{isIndex==true}}">
-    <button size="mini" type="default">全部</button>
-    <button size="mini" type="default">旧书</button>
-    <button size="mini" type="default">二手车</button>
-    <button size="mini" type="default">工具</button>
-    <button size="mini" type="default">宿舍用品</button>
-    <button size="mini" type="default">零食</button>
-    <button size="mini" type="default">生活用品</button>
-    <button size="mini" type="default">拼车</button>
-    <button size="mini" type="default">跑腿</button>
-    <button size="mini" type="default">打印</button>
-    <button size="mini" type="default">活动</button>
-  </scroll-view
->
+  <scroll-view  scroll-x="true" id="middle-scroll-sidebar" wx:if="{{isIndex==true}}">
+    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{0}}">全部</button>
+    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{1}}">旧书</button>
+    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{2}}">二手车</button>
+    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{3}}">工具</button>
+    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{4}}">宿舍用品</button>
+    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{5}}">零食</button>
+    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{6}}">生活用品</button>
+    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{7}}">拼车</button>
+    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{8}}">跑腿</button>
+    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{9}}">打印</button>
+    <button size="mini" type="default" bindtap="chooseType" data-typeid="{{10}}">活动</button>
+  </scroll-view>
   <view id="middle-sidebar" wx:else>
     <button size="mini" type="default" bindtap="onQuery">查询记录</button>
   </view>
@@ -42,7 +41,7 @@
   </scroll-view>
   <scroll-view class="messagebox" wx:elif="{{isIndex==true}}"  scroll-y='true'> <!-- 供给/需求 -->
     <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" wx:key="item._id" class="code">
-      <view wx:if="{{item.isSupply==isSupply}}" class="message">{{item.message}}</view>
+      <view wx:if="{{item.isSupply==isSupply && (typeId==0 || item.typeId==typeId)}}" class="message">{{item.message}}</view>
     </view>
   </scroll-view>
   <scroll-view class="messagebox" wx:elif="{{isIndex==false}}"  scroll-y='true'>  <!-- 我的消息 -->

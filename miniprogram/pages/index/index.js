@@ -10,6 +10,7 @@ Page({
     openid: '',
     isIndex: true,
     isSupply: -1,
+    typeId: 0,
     queryResult: '',
   },
 
@@ -122,6 +123,14 @@ Page({
       }
     })
 
+  },
+
+  chooseType: function (e) {
+    console.log('选择类型: ', e.currentTarget.dataset.typeid)
+    // var newTypeId = e.currentTarget.id
+    this.setData({
+      typeId: e.currentTarget.dataset.typeid
+    })
   },
 
   onQuery: function () { /*获得我的消息*/
