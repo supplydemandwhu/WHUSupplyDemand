@@ -25,8 +25,17 @@ page {
   background-color: blue;
 }
 
-#middle-sidebar {
+#middle-scroll-sidebar {
   height: 5%;
+  width: 98%;
+  white-space: nowrap;
+  /* box-sizing:  border-box ; */
+}
+#middle-sidebar{
+  height: 5%;
+}
+#middle-scroll-sidebar button{
+  height: 100%;
 }
 
 .messagebox {

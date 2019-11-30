@@ -18,9 +18,20 @@
   </view>
   
   <!-- TODO 分类 -->
-  <view id="middle-sidebar" wx:if="{{isIndex==true}}">
-  分类待完成
-  </view>
+  <scroll-view  scroll-x="true" style="width: 100%" id="middle-scroll-sidebar" wx:if="{{isIndex==true}}">
+    <button size="mini" type="default">全部</button>
+    <button size="mini" type="default">旧书</button>
+    <button size="mini" type="default">二手车</button>
+    <button size="mini" type="default">工具</button>
+    <button size="mini" type="default">宿舍用品</button>
+    <button size="mini" type="default">零食</button>
+    <button size="mini" type="default">生活用品</button>
+    <button size="mini" type="default">拼车</button>
+    <button size="mini" type="default">跑腿</button>
+    <button size="mini" type="default">打印</button>
+    <button size="mini" type="default">活动</button>
+  </scroll-view
+>
   <view id="middle-sidebar" wx:else>
     <button size="mini" type="default" bindtap="onQuery">查询记录</button>
   </view>
