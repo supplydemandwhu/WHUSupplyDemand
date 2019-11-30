@@ -1,36 +1,4 @@
-/**app.wxss**/
-view button {
-  margin: 0;
-  padding: 0;
-}
-
-.container  {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top:0;
-  margin: 0;
-  padding: 0;
-  
-  display: flex; /*以同一块中上一个子块为基准*/
-  flex-direction: column; /*排在一列中*/
-  align-items: center; /*内部块居中*/
-  box-sizing: border-box; 
-  background-color: #ddd
-}
-
-button {
-  background: initial;
-}
-
-button:focus{
-  outline: 0;
-}
-
-button::after{
-  border: none;
-}
-
+/**index.wxss**/
 
 page {
   background: #f6f6f6;
@@ -39,9 +7,9 @@ page {
   justify-content: flex-start;
 }
 
-.userinfo, .uploader, .tunnel {
-  margin-top: 40rpx;
-  height: 140rpx;
+.userinfo, .uploader, .tunnel, .message { /*框白色底色*/
+  margin-top: 20rpx;
+  height: 100rpx;
   width: 100%;
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -53,6 +21,14 @@ page {
   transition: all 300ms ease;
 }
 
+.userinfo-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+  background-size: cover;
+  background-color: white;
+}
 
 .userinfo-avatar:after {
   border: none;
@@ -69,7 +45,7 @@ page {
   border: none;
 }
 
-.uploader, .tunnel {
+.uploader, .tunnel, .message { /*占位符大小*/
   height: auto;
   padding: 0 0 0 40rpx;
   flex-direction: column;
@@ -77,7 +53,7 @@ page {
   box-sizing: border-box;
 }
 
-.uploader-text, .tunnel-text {
+.uploader-text, .tunnel-text, .message-text { /*文本内容*/
   width: 100%;
   line-height: 52px;
   font-size: 34rpx;

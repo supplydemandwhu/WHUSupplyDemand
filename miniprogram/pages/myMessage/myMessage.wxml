@@ -1,6 +1,18 @@
 <!--pages/myMessage/myMessage.wxml-->
 <view class="container">
 
+  <!-- 供需按钮 -->
+  <view id="upper-sidebar">
+    <!-- 用户 头像 -->
+    <button 
+      open-type="getUserInfo" 
+      bindgetuserinfo="onGetUserInfo"
+      id="userinfo-avatar"
+      style="background-image: url({{userInfo.avatarUrl}})"
+    ></button>
+    
+  </view>
+
   <!-- 查询记录 -->
   <view class="guide">
     <button size="mini" type="default" bindtap="onQuery">查询记录</button>
@@ -13,4 +25,23 @@
 
   </view>
 
+
+  
+  <!-- 下边栏 -->
+  <view id="lower-sidebar">
+
+    <button class="lower-button" bindtap="goToIndex">首页</button>
+
+    <button class="lower-button" bindtap="goToSendMessage">发布消息</button>
+    
+    <button class="lower-button" bindtap="goToMyMessage">我的</button>
+    <!--
+    <view class="message-text">
+    <navigator url="../sendMessage/sendMessage" open-type="navigate">
+        <text>发布消息</text>
+    </navigator>
+    </view>
+    -->
+
+  </view>
 </view>

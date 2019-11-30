@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/myMessage/myMessage",
+"pages/sendMessage/sendMessage",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
     "pages/databaseGuide/databaseGuide",
