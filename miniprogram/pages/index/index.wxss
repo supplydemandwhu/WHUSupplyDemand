@@ -40,7 +40,36 @@ page {
 
 .messagebox {
   margin-top: 2%;
-  width: 90%;
+  width: 95%;
   height: 70%;
   background-color: white;
+}
+
+.message {
+  width: 100%;
+  height: 140rpx;
+  display: flex; /*以同一块中上一个子块为基准*/
+  flex-direction: row; /*排在一行中*/
+  align-items: center; /*内部块居中*/
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  /* background: red; */
+  margin-bottom: 10rpx;
+}
+
+.userinfo {
+  width: 20%;
+
+  display: flex; /*以同一块中上一个子块为基准*/
+  flex-direction: column; /*排在一列中*/
+  align-items: center; /*内部块居中*/
+}
+
+.userinfo-avatar{
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.messageTitle {
+  font-weight: bold;
+  margin: 10rpx;
 }
