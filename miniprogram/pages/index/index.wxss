@@ -37,3 +37,30 @@ page {
   height: 70%;
   background-color: white;
 }
+
+
+.View{
+
+  padding: 20rpx 0;
+
+  margin: 24rpx 0;
+
+  background-color: cyan;
+
+  font-size: 30rpx;
+
+  line-height: 40rpx;
+
+}
+
+ 
+
+.viewNum{
+
+  color: red;
+
+  font-size: 34rpx;
+
+  margin-bottom: 20rpx;
+
+}

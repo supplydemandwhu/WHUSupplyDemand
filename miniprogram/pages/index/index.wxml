@@ -20,24 +20,51 @@
   分类待完成
   </view>
 
-  <!-- 全部消息列表 -->
-  <scroll-view class="messagebox" wx:if="{{kind==-1}}"  scroll-y='true'>
-  点击“供”或“需”显示消息
-  </scroll-view>
-  <scroll-view class="messagebox" wx:elif="{{kind==0}}"  scroll-y='true'> <!-- 供给 -->
-    <!-- <view wx:if="{{queryResult}}"> -->
-      <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" class="code">
-        <view wx:if="{{item.isSupply==true}}" class="message">{{item.message}}</view>
-      </view>
-    <!-- </view> -->
-  </scroll-view>
-  <scroll-view class="messagebox" wx:else  scroll-y='true'>  <!-- 需求 -->
-    <!-- <view wx:if="{{queryResult}}"> -->
-      <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" class="code">
-        <view wx:if="{{item.isSupply==false}}" class="message">{{item.message}}</view>
-      </view>
-    <!-- </view> -->
-  </scroll-view>
+  
+ 
+<!--index页  -->
+
+
+
+<!--index页  -->
+
+<!--页面传值（多个参数）  -->
+
+ 
+
+ 
+
+ 
+
+<!--通过设置id的方法标识来传值  -->
+
+<block wx:for="{{list}}" wx:key="">     
+
+      <view class='View' bindtap='detail' id='{{index}}'>        
+
+         <view class="viewNum">第{{index+1}}个View</view>  
+
+         <view>{{item.a1}}</view>
+
+         <view>{{item.a2}}</view>
+
+         <view>{{item.a3}}</view>
+
+     </view>
+
+</block>  
+
+ 
+
+ 
+
+ 
+
+
+
+
+
+
 
 
   <!-- 下边栏 -->

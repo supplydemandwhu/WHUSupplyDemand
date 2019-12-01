@@ -68,6 +68,12 @@ Page({
   goToMyMessage: function (param) {
     wx.navigateTo({ url: '../myMessage/myMessage', });
   },
+
+
+
+
+
+
   onGetUserInfo: function(e) {
     console.log("弹窗获取信息")
     if (!this.data.logged && e.detail.userInfo) {
@@ -129,5 +135,92 @@ Page({
       kind: 1,
     })
   },
+  
+
+
+
+
+
+
+
+
+
+
+  data: {
+
+    // 数据
+
+    list: [
+
+      {
+
+        a1: "name11",
+
+        a2: "name12",
+
+        a3: "name13"
+
+      },
+
+      {
+
+        a1: "name21",
+
+        a2: "name22",
+
+        a3: "name23"
+
+      },
+
+      {
+
+        a1: "name31",
+
+        a2: "name32",
+
+        a3: "name33"
+
+      },
+
+    ]
+
+  },
+
+
+
+  // 方法
+
+  detail: function (e) {
+
+    var that = this
+
+    //获取当前点击元素的id(索引值)
+
+    var Id = e.currentTarget.id;
+
+    //获取当前点击元素的属性值。
+
+    var mesg = that.data.list[Id];
+
+    //因为获取到的值是个对象，url只能传字符串，所以必须把它转化为字符串。
+
+    mesg = JSON.stringify(mesg);
+
+    //跳转到详情页 
+
+    wx.navigateTo({
+
+      //在接收页面的url后面加上“？自定义名称=字符串”就可以通过url传值
+
+      url: '../detail/detail?Mesgs=' + mesg,
+
+
+
+    })
+
+  },
+
+
+
 
 })
