@@ -39,7 +39,7 @@
           <image class="closeImv" src="deleteImage.jpg" mode="scaleToFill" catchtap="deleteImvDetail" data-id="{{index}}"></image> 
         </view>       
         <!--这个是选择图片-->      
-        <view class="upFile" bindtap="chooseDetail" style="border-radius: 5px" wx:if="{{chooseAnotherImage}}">      
+        <view class="upFile" bindtap="chooseDetail" style="border-radius: 5px" wx:if="{{detail.length < 3}}">      
           <image class="itemImv" src="chooseImage.jpg"></image>      <!--选择图片按钮-->   
         </view>       
       </view>

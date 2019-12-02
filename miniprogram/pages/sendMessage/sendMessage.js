@@ -13,18 +13,11 @@ Page({
 
     info: "",
     
+    tot: 0,
     detail: [], //详情图片
-    detailNew: [],
-    detailAll: [],
     checkUp: true, //判断从编辑页面进来是否需要上传图片
-    chooseAnotherImage: true,
 
     isSupply: true,
-    params: {
-      productID: 0,
-      contentFile: "",
-      check: false,
-    },
   },
 
   onLoad: function (options) {
@@ -43,13 +36,6 @@ Page({
     })
   },
 
-  //详细内容变化
-  infoBlur(e) {
-    this.setData({
-      info: e.detail.value
-    })
-  },
-
   //分类变化
   category(e) {
     this.setData({
@@ -57,16 +43,10 @@ Page({
     })
   },
 
-  getProductDetail() {
-    let params = { openid: app.globalData.openid, productID: this.data.productID }
-    app.getReleaseProductDetail(params).then(res => {
-      let product = res.data.productDetail[0]
-
-      if (product.detailImages.length >= 3) { this.setData({ chooseAnotherImage: false }) }
-      else { this.setData({ chooseAnotherImage: true }) }
-      this.setData({
-        title: product.title, info: product.info, detail: product.detailImages, categoryInd: categoryInd
-      })
+  //详细内容变化
+  infoBlur(e) {
+    this.setData({
+      info: e.detail.value
     })
   },
 
@@ -79,23 +59,11 @@ Page({
     else if (e.detail.value.info === "") {
       wx.showToast({ title: '请输入详细内容', icon: "none", duration: 1000, mask: true, })
     }
-    else if (that.data.detail.length === 0) { wx.showToast({ title: '请选择详情图片', icon: "none", duration: 1000, mask: true, }) }
     else {
-      let params = {
-        openid: app.globalData.openid,
-        productID: that.data.productID,
-        title: e.detail.value.title,
-        info: e.detail.value.info,
-        productCategory: that.data.category[that.data.categoryInd].id,
-      }
       wx.showModal({
         title: '提示', content: '确定发布商品', success(res) {
           if (res.confirm) {
-            if (that.data.productID != 0) {
-              that.sureEdit(params); //编辑            
-            } else {
-              that.sureRelease(params); //发布            
-            }
+            that.sureRelease(e); //发布
           }
         }
       })
@@ -104,210 +72,98 @@ Page({
 
 
   /**确认发布 */
-  sureRelease(params) {
+  sureRelease(e) {
     let that = this
-    app.addProduct(params).then(res => {
-      that.data.params.productID = res.data.productID;
-      that.data.params.contentFile = res.data.contentFile;
-      for (var j = 0; j < that.data.detail.length; j++) {
-        if (that.data.detail.length === j + 1) {
-          that.data.params.check = true
-        }
-        wx.uploadFile({
-          url: app.globalData.baseUrl + '/wechat/release/addProductPhoto',
-          filePath: that.data.detail[j],
-          name: 'detail',
-          formData: {
-            'parameters': JSON.stringify(that.data.params)
-          },
-          success: function (res) {
-            if (JSON.parse(res.data).state === 1) {
-              wx.showToast({
-                title: '消息发布成功',
-                icon: "none",
-                duration: 2000,
-                mask: true,
-                success() {
-                  setTimeout(function () {
-                    wx.navigateBack({
-                      delta: 0,
-                    })
-                  }, 1000);
-                }
-              })
-            }
-            else {
-              wx.showToast({
-                title: '商品发布失败，请稍后再试',
-                icon: "none",
-                duration: 2000,
-                mask: true,
-                success() {
-                  setTimeout(function () {
-                    wx.navigateBack({
-                      delta: 0,
-                    })
-                  }, 1000);
-                }
-              })
-            }
-          },
 
-          fail: function (res) {
-            if (JSON.parse(res.errMsg) === "request:fail socket time out timeout:6000") {
-              wx.showToast({
-                title: '请求超时，请稍后再试！',
-                icon: "none",
-                duration: 2000,
-                mask: true,
-                success() {
-                  setTimeout(function () {
-                    wx.navigateBack({
-                      delta: 0,
-                    })
-                  }, 1000);
-                }
-              })
-            }
-          }
+    const db = wx.cloud.database()
+    db.collection('message').add({
+      data: {
+        isSupply: that.data.isSupply,
+        isInProgress: true,
+        isHidden: false,
+        type: that.data.categoryInd,
+
+        userInfo: {
+          avatarUrl: '',
+          nickName: ''
+        },
+        message: that.data.info,
+        images: that.data.detail,
+        commentsSection: []
+      },
+      success: res => {
+        // 在返回结果中会包含新创建的记录的 _id
+        /*this.setData({
+          counterId: res._id,
+          count: 1
+        })*/
+        wx.showToast({
+          title: '消息发布成功',
         })
+        console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '消息发布失败'
+        })
+        console.error('[数据库] [新增记录] 失败：', err)
       }
     })
+
   },
 
-  /**确认编辑 */
-  sureEdit(params) {
-    let that = this
-    app.addProduct(params).then(res => {
-      that.data.params.productID = res.data.productID;      //判断编辑页面下是否只改变了文字数据，选择图片后checkUp为false      
-      if (that.data.checkUp) {
-        wx.showToast({
-          title: '消息修改成功',
-          icon: "none",
-          duration: 2000,
-          mask: true,
-          success() {
-            setTimeout(function () {
-              wx.navigateBack({
-                delta: 0,
-              })
-            }, 1000);
-          }
-        })
-      }
-      //判断编辑页面下是否改变了图片 改变了则uploadFile      
-      else {
-        that.checkDetail();        //如果没有添加直接删除图片的话        
-        if (that.data.detailAll.length === 0) {
-          wx.showToast({
-            title: '消息修改成功', icon: "none", duration: 2000, mask: true,
-            success() { setTimeout(function () { wx.navigateBack({ delta: 0, }) }, 1000); }
-          })
-        }
-        //只改变detailAll，不改变bannerAll的情况下，直接将detailAll写入数据库        
-        else
-          for (var j = 0; j < that.data.detailAll.length; j++) {
-            if (that.data.detailAll.length === j + 1) {
-              that.data.params.check = true
-            }
-            wx.uploadFile({
-              url: app.globalData.baseUrl + '/wechat/release/addProductPhoto',
-              filePath: that.data.detailAll[j],
-              name: 'detail',
-              formData: {
-                'parameters': JSON.stringify(that.data.params)
-              },
-              success: function (res) {
-                if (JSON.parse(res.data).state === 1) {
-                  wx.showToast({
-                    title: '消息修改成功',
-                    icon: "none",
-                    duration: 2000,
-                    mask: true,
-                    success() {
-                      setTimeout(function () {
-                        wx.navigateBack({
-                          delta: 0,
-                        })
-                      }, 1000);
-                    }
-                  })
-                } else {
-                  wx.showToast({
-                    title: '消息修改失败',
-                    icon: "none",
-                    duration: 2000,
-                    mask: true,
-                    success() {
-                      setTimeout(function () {
-                        wx.navigateBack({
-                          delta: 0,
-                        })
-                      }, 1000);
-                    }
-                  })
-                }
-              },
-              fail: function (res) {
-                if (JSON.parse(res.errMsg) === "request:fail socket time out timeout:6000") {
-                  wx.showToast({
-                    title: '请求超时，请稍后再试！',
-                    icon: "none",
-                    duration: 2000,
-                    mask: true,
-                    success() {
-                      setTimeout(function () {
-                        wx.navigateBack({ delta: 0, })
-                      }, 1000);
-                    }
-                  })
-                }
-              }
-            })
-          }
-      }
-    }
-
-    )
-  },
-
-
-  checkDetail() {
-    let detail = this.data.detail
-    let detailNew = this.data.detailNew
-    let detailAll = this.data.detailAll
-    for (var i = 0; i < detail.length; i++) {
-      for (var j = 0; j < detailNew.length; j++) {
-        if (detail[i] === detailNew[j]) {
-          detailAll = detailAll.concat(detail[i])
-          this.setData({ detailAll: detailAll })
-        }
-        else { console.log("detail无相同") }
-      }
-    }
-  },
 
   //选择上传图片
   chooseDetail: function () {
-    var that = this; if (that.data.detail.length < 3) {
+    var that = this; 
+    if (that.data.detail.length < 3) {
       wx.chooseImage({
-        count: 3, sizeType: ['compressed'], sourceType: ['album', 'camera'], success: function (photo) {          //detail中包含的可能还有编辑页面下回显的图片，detailNew中包含的只有所选择的图片          
+        count: 3 - that.data.detail.length , //count含义？
+        sizeType: ['compressed'],
+        sourceType: ['album', 'camera'],
+        success: function (photo) {          //detail中包含的可能还有编辑页面下回显的图片，detailNew中包含的只有所选择的图片  ？？？    
+
+          // 加载黑框
+          wx.showLoading({
+            title: '上传中',
+          })
+
           let detail = that.data.detail;
-          detail = detail.concat(photo.tempFilePaths);
-          let detailNew = that.data.detailNew
-          detailNew = detailNew.concat(photo.tempFilePaths)
+          var tot = that.data.tot;
+
+          for (var i = 0; i < photo.tempFilePaths.length; i++){
+            // 临时文件路径？
+            const filePath = photo.tempFilePaths[i]
+            // 上传图片 my-image.{文件扩展名}
+            const cloudPath = 'image' + tot + filePath.match(/\.[^.]+?$/)[0]
+            ++tot
+            detail.push(cloudPath)
+            wx.cloud.uploadFile({
+              cloudPath,
+              filePath,
+              success: res => {
+                console.log('[上传文件] 成功：', res)
+              },
+              fail: e => {
+                console.error('[上传文件] 失败：', e)
+                wx.showToast({
+                  icon: 'none',
+                  title: '上传失败',
+                })
+              },
+              complete: () => {
+                wx.hideLoading()
+              }
+            })
+
+          }
+
           that.setData({
             detail: detail,
-            detailNew: detailNew,
-            checkUp: false
+            tot: tot,
           })
-          that.chooseViewShowDetail();
-          if (that.data.productID != 0) {
-            let params = { productID: that.data.productID, index: -1, }
-            app.deleteProductImage(params).then(res => {
-              if (res.data.fileContent !== "") { that.data.params.contentFile = res.data.fileContent }
-            })
-          }
+          
         }
       })
     }
@@ -319,38 +175,19 @@ Page({
     var that = this;
     var detail = that.data.detail;
     var itemIndex = e.currentTarget.dataset.id;
-    if (that.data.productID != 0) {
-      wx.showModal({
-        title: '提示', content: '确定放弃上传这张图片？',
-        success(res) {
-          if (res.confirm) {
-            detail.splice(itemIndex, 1);
-            that.setData({ detail: detail, checkUp: false })
-            that.chooseViewShowDetail();
-            let params = { productID: that.data.productID, index: itemIndex, }
-            app.deleteProductImage(params).then(res => {
-              if (res.data.fileContent !== "") {
-                that.data.params.contentFile = res.data.fileContent
-              }
-            })
-          }
+    wx.showModal({
+      title: '提示', content: '确定放弃上传这张图片？',
+      success(res) {
+        if (res.confirm) {
+          detail.splice(itemIndex, 1);
+          that.setData({ 
+            detail: detail 
+          })
         }
-      })
-    } else {
-      detail.splice(itemIndex, 1); 
-      that.setData({ detail: detail, checkUp: false })
-      that.chooseViewShowDetail();
-    }
+      }
+    })
   },
 
-  /** 是否隐藏图片选择detail */
-  chooseViewShowDetail: function () {
-    if (this.data.detail.length >= 3) {
-      this.setData({ chooseAnotherImage: false })
-    } else {
-      this.setData({ chooseAnotherImage: true })
-    }
-  },
 
   /** 查看大图Detail */
   showImageDetail: function (e) {
