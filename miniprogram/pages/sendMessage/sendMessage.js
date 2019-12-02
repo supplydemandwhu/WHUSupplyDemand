@@ -13,11 +13,13 @@ Page({
 
     info: "",
     
-    tot: 0,
     detail: [], //详情图片
     checkUp: true, //判断从编辑页面进来是否需要上传图片
 
     isSupply: true,
+
+    timeStamp: 0,
+    tot: 0,
   },
 
   onLoad: function (options) {
@@ -25,6 +27,7 @@ Page({
       this.setData({
         openid: app.globalData.openid,
         productID: options.productID,
+        timeStamp: new Date().getTime(),
       })
     }
   },
@@ -136,7 +139,7 @@ Page({
             // 临时文件路径？
             const filePath = photo.tempFilePaths[i]
             // 上传图片 my-image.{文件扩展名}
-            const cloudPath = 'image' + tot + filePath.match(/\.[^.]+?$/)[0]
+            const cloudPath = that.data.openid + '/' + that.data.timeStamp + '/image' + tot + filePath.match(/\.[^.]+?$/)[0]
             ++tot
             detail.push(cloudPath)
             wx.cloud.uploadFile({
@@ -206,35 +209,4 @@ Page({
     })
   },
 
-  // //添加到数据库
-  // onAdd: function (e) {
-  //   const db = wx.cloud.database()
-  //   const newMessage = e.detail.value.textarea //this.data.message
-  //   const newIsSupply = this.data.isSupply
-  //   db.collection('message').add({
-  //     data: {
-
-  //       message: newMessage,
-  //       isSupply: newIsSupply
-  //     },
-  //     success: res => {
-  //       // 在返回结果中会包含新创建的记录的 _id
-  //       /*this.setData({
-  //         counterId: res._id,
-  //         count: 1
-  //       })*/
-  //       wx.showToast({
-  //         title: '消息发布成功',
-  //       })
-  //       console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
-  //     },
-  //     fail: err => {
-  //       wx.showToast({
-  //         icon: 'none',
-  //         title: '消息发布失败'
-  //       })
-  //       console.error('[数据库] [新增记录] 失败：', err)
-  //     }
-  //   })
-  // }
 })
