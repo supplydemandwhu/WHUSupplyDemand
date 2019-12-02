@@ -24,4 +24,5 @@
   width: 33%;
   border: gray solid 1rpx;
   /* background-color: pink; */
+
 }
