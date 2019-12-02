@@ -2,52 +2,55 @@
 
   <!-- 云开发用户管理指引 -->
 <form bindsubmit="formSubmit">
-<view class='title'>
-  <view class='title_text'>      
-    <text>标题:</text>      
-      <input name="title" type='text' value='{{title}}' bindblur='titleBlur'></input>    
-  </view>  
-</view>
-<view class='title'>    
-  <view class='title_text'>     
-   <text>分类 :</text>      
-  <picker name="category" mode="selector" range="{{category}}" range-key="name" value="{{categoryInd}}" bindchange="category">       <input id='{{category[categoryInd].categoryID}}' name="category" type='text' value='{{category[categoryInd].title}}' disabled='true'></input>     
-   </picker>       
-   <span class='icon iconfont icon-weibiaoti34'></span>
-   </view>  
-</view>
 
-<view class="info-point">
+  <view class='title'>
+    <view class='title_text'>      
+      <text>标题:</text>      
+        <input name="title" type='text' value='{{title}}' bindblur='titleBlur'></input>    
+    </view>  
+  </view>
+
+
+  <view class='title'>    
+    <view class='title_text'>     
+    <text>分类 :</text>      
+      <picker name="category" mode="selector" range="{{category}}" range-key="name" value="{{categoryInd}}" bindchange="category">       
+        <input id='{{category[categoryInd].categoryID}}' name="category" type='text' value='{{category[categoryInd].name}}' disabled='true'></input>     
+      </picker>       
+      <span class='icon iconfont icon-weibiaoti34'></span>
+    </view>  
+  </view>
+
+
+  <view class="info-point">
     <view class="title_text">
-    <text>详细内容：</text></view>
-     <textarea name="info" class='textarea' value='{{info}}' bindblur='infoBlur'></textarea>
-
-
-   <!-- <view class="section"> -->
-      <!-- <form bindsubmit="onAdd"> -->
-          <!-- <textarea placeholder="请在此输入消息内容" name="textarea"/> -->
-
-       
-<view class='upImv'>    
-    <view class='upImv_text'>上传具体图片</view>    
-    <view class="addImv">      
-    <!--这个是已经选好的图片-->      
-    <view wx:for="{{detail}}" wx:key="key" class="upFile" bindtap="showImageDetail" style="border-radius: 5px" data-id="{{index}}">        
-    <image class="itemImv" src="{{item}}"></image>        
-    <image class="closeImv" src="D:/pprea/miniprogram/images/code-cloud-callback-config.png" mode="scaleToFill" catchtap="deleteImvDetail" data-id="{{index}}"></image>      </view>       
-    <!--这个是选择图片-->      
-    <view class="chooseView" bindtap="chooseDetail" wx:if="{{chooseViewShowDetail}}">        
-    <image class="chooseImv" src="D:/pprea/miniprogram/images/code-cloud-callback-config.png"></image>      
-    </view>    
+      <text>详细内容：</text>
     </view>
+    <textarea name="info" class='textarea' value='{{info}}' bindblur='infoBlur'></textarea>
+
+        
+    <view class='upImv'>    
+      <view class='upImv_text'>上传具体图片</view>    
+      <view class="addImv">      
+        <!--这个是已经选好的图片-->      
+        <view wx:for="{{detail}}" wx:key="key" class="upFile" bindtap="showImageDetail" style="border-radius: 5px" data-id="{{index}}">        
+          <image class="itemImv" src="{{item}}"></image>        
+          <!--删除图片按钮-->
+          <image class="closeImv" src="deleteImage.jpg" mode="scaleToFill" catchtap="deleteImvDetail" data-id="{{index}}"></image> 
+        </view>       
+        <!--这个是选择图片-->      
+        <view class="upFile" bindtap="chooseDetail" style="border-radius: 5px" wx:if="{{chooseAnotherImage}}">      
+          <image class="itemImv" src="chooseImage.jpg"></image>      <!--选择图片按钮-->   
+        </view>       
+      </view>
     </view>
-       <radio-group class="is-supply-group" bindchange="isSupplyChange">
-              <radio value="supply" checked/>提供
-              <radio value="demand"/>需求
-          </radio-group>
-      <button size="mini" class="sureRelease" form-type="submit"> 提交 </button>
-      <!-- </form> -->
-    <!-- </view> -->
+
+    <radio-group class="is-supply-group" bindchange="isSupplyChange">
+      <radio value="supply" checked/>提供
+      <radio value="demand"/>需求
+    </radio-group>
+
+    <button size="mini" class="sureRelease" form-type="submit"> 提交 </button>
   </view>
 </form>
 
