@@ -84,12 +84,13 @@ Page({
         isSupply: that.data.isSupply,
         isInProgress: true,
         isHidden: false,
-        type: that.data.categoryInd,
-
         userInfo: {
           avatarUrl: '',
           nickName: ''
         },
+
+        title: that.data.title,
+        type: that.data.categoryInd,
         message: that.data.info,
         images: that.data.detail,
         commentsSection: []
@@ -141,7 +142,7 @@ Page({
             // 上传图片 my-image.{文件扩展名}
             const cloudPath = that.data.openid + '/' + that.data.timeStamp + '/image' + tot + filePath.match(/\.[^.]+?$/)[0]
             ++tot
-            detail.push(cloudPath)
+            detail.push(filePath)
             wx.cloud.uploadFile({
               cloudPath,
               filePath,
