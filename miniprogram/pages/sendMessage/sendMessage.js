@@ -13,7 +13,8 @@ Page({
 
     info: "",
     
-    detail: [], //详情图片
+    imagePaths: [], //本机图片地址
+    cloudPaths: [], //云端图片地址
     checkUp: true, //判断从编辑页面进来是否需要上传图片
 
     isSupply: true,
@@ -92,7 +93,7 @@ Page({
         title: that.data.title,
         type: that.data.categoryInd,
         message: that.data.info,
-        images: that.data.detail,
+        images: that.data.cloudPaths,
         commentsSection: []
       },
       success: res => {
@@ -121,9 +122,9 @@ Page({
   //选择上传图片
   chooseDetail: function () {
     var that = this; 
-    if (that.data.detail.length < 3) {
+    if (that.data.imagePaths.length < 3) {
       wx.chooseImage({
-        count: 3 - that.data.detail.length , //count含义？
+        count: 3 - that.data.imagePaths.length , //count含义 此次上传的最多图片数
         sizeType: ['compressed'],
         sourceType: ['album', 'camera'],
         success: function (photo) {          //detail中包含的可能还有编辑页面下回显的图片，detailNew中包含的只有所选择的图片  ？？？    
@@ -133,7 +134,8 @@ Page({
             title: '上传中',
           })
 
-          let detail = that.data.detail;
+          let imagePaths = that.data.imagePaths;
+          let cloudPaths = that.data.cloudPaths;
           var tot = that.data.tot;
 
           for (var i = 0; i < photo.tempFilePaths.length; i++){
@@ -142,7 +144,8 @@ Page({
             // 上传图片 my-image.{文件扩展名}
             const cloudPath = that.data.openid + '/' + that.data.timeStamp + '/image' + tot + filePath.match(/\.[^.]+?$/)[0]
             ++tot
-            detail.push(filePath)
+            imagePaths.push(filePath)
+            cloudPaths.push(cloudPath)
             wx.cloud.uploadFile({
               cloudPath,
               filePath,
@@ -164,7 +167,8 @@ Page({
           }
 
           that.setData({
-            detail: detail,
+            imagePaths: imagePaths,
+            cloudPaths: cloudPaths,
             tot: tot,
           })
           
@@ -174,18 +178,21 @@ Page({
     else wx.showToast({ title: '限制选择3个文件', icon: 'none', duration: 1000 })
   },
 
-  // 删除图片detail   
+  // 放弃上传图片   
   deleteImvDetail: function (e) {
     var that = this;
-    var detail = that.data.detail;
+    var imagePaths = that.data.imagePaths;
+    var cloudPaths = that.data.cloudPaths;
     var itemIndex = e.currentTarget.dataset.id;
     wx.showModal({
       title: '提示', content: '确定放弃上传这张图片？',
       success(res) {
         if (res.confirm) {
-          detail.splice(itemIndex, 1);
+          imagePaths.splice(itemIndex, 1);
+          cloudPaths.splice(itemIndex, 1);
           that.setData({ 
-            detail: detail 
+            imagePaths: imagePaths, 
+            cloudPaths: cloudPaths,
           })
         }
       }

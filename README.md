@@ -27,7 +27,7 @@ Wuhan University Supply and Demand WeChat Mini Program
 
 # 尚未解决的bug
 得到用户授权后在“微信开发工具”中无法正常显示用户图片，但在真机调试中可以。（可能与云函数的配置有关）  
-
+上传后未实际发布的图片仍然保留  
 
 
 # 工作计划
