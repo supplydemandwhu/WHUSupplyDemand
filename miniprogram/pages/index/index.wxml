@@ -39,8 +39,8 @@
           <image class="userinfo-avatar" src="{{item.userInfo.avatarUrl}}" style="height:30rpx, width:30rpx"></image>
           <text class="userinfo-nickname">{{item.userInfo.nickName}}</text>
         </view>
-        <view class="messageTitle">
-          {{item.message}}
+        <view class="messageTitle" bindtap="goToDetail" data-message="{{item}}">
+          {{item.title}}
         </view>
       </view>
     </view>

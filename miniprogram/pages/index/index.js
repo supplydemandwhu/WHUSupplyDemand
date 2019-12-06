@@ -134,6 +134,13 @@ Page({
     })
   },
 
+  goToDetail: function (e) {
+    console.log('../detail/detail?Message=' + JSON.stringify(e.currentTarget.dataset.message))
+    wx.navigateTo({
+      url: '../detail/detail?Message=' + JSON.stringify(e.currentTarget.dataset.message)
+    })
+  },
+
   onQuery: function () { /*获得我的消息*/
     const db = wx.cloud.database()
     // 查询当前用户所有的 counters
