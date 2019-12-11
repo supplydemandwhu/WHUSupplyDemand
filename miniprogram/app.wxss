@@ -39,14 +39,10 @@ page {
   justify-content: flex-start;
 }
 
-.userinfo, .uploader, .tunnel {
-  margin-top: 40rpx;
+.userinfo {
+  margin-top: 10rpx;
   height: 140rpx;
   width: 100%;
-  background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-left: none;
-  border-right: none;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -54,12 +50,12 @@ page {
 }
 
 
-.userinfo-avatar:after {
+/* .userinfo-avatar:after {
   border: none;
-}
+} */
 
 .userinfo-nickname {
-  font-size: 32rpx;
+  font-size: 40rpx;
   color: #007aff;
   background-color: white;
   background-size: cover;

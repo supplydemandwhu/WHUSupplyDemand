@@ -1,21 +1,33 @@
 //index.js
 const app = getApp()
-
 Page({
   data: {
-
+    typeName : ["全部", "旧书", "二手车", "工具", "宿舍用品", "零食", "生活用品", "拼车", "跑腿", "打印", "活动","其他"],
     userInfo: {
       avatarUrl: '/images/user-unlogin.png',
+      gender:["1","2"]
     },
     logged: false,
     openid: '',
-    kind: -1,
+    isIndex: true,
+    isSupply: -1,
+    typeId: 0,
     queryResult: '',
+    imgUrls: [
+      '/images/1.jpg',
+      '/images/2.jpg',
+      '/images/3.png',
+      '/images/4.jpg',
+    ],
+    indicatorDots: true,
+    autoplay: true,
+    interval: 5000,
+    duration: 500,
+    circular: true,
   },
 
   onLoad: function() {
     
-
     if (!wx.cloud) {
       wx.redirectTo({
         url: '../chooseLib/chooseLib',
@@ -62,35 +74,33 @@ Page({
 
   },
 
-  goToIndex: function (param) {
-    wx.navigateTo({ url: '../index/index', });
-  },
-  goToSendMessage: function (param) {
-    wx.navigateTo({ url: '../sendMessage/sendMessage', });
-  },
-  goToMyMessage: function (param) {
-    wx.navigateTo({ url: '../myMessage/myMessage', });
-  },
-  onGetUserInfo: function(e) {
+  onGetUserInfo: function (e) { /*弹窗获取用户信息*/
     console.log("弹窗获取信息")
     if (!this.data.logged && e.detail.userInfo) {
+      
       this.setData({
         logged: true,
-        userInfo: e.detail.userInfo,
+        userInfo: e.data.data,
+        gender: e.userInfo.gender,
       })
-      // 传递用户信息
-      app.globalData.userInfo = e.detail.userInfo
+      // 传递用户信息 e.detail.userInfo
+      app.globalData.userInfo = e.data.data
     }
   },
 
-  getSupply: function () {
+  getSupply: function () {/*获得供给*/
     // 获取交易消息
     const db = wx.cloud.database()
     // 查询当前用户所有的 counters
-    db.collection('message').get({
+    db.collection('message').where({
+      isSupply: true,
+    }).get({
       success: res => {
         this.setData({
           queryResult: res.data,
+          isIndex: true,
+          isSupply: true,
+          
         })
         console.log('[数据库] [查询记录] 成功: ', res)
       },
@@ -103,19 +113,20 @@ Page({
       }
     })
 
-    this.setData({
-      kind: 0,
-    })
   },
 
-  getDemand: function () {
+  getDemand: function () { /*获得需求*/
     // 获取交易消息
     const db = wx.cloud.database()
     // 查询当前用户所有的 counters
-    db.collection('message').get({
+    db.collection('message').where({
+      isSupply: false,
+    }).get({
       success: res => {
         this.setData({
           queryResult: res.data,
+          isIndex: true,
+          isSupply: false,
         })
         console.log('[数据库] [查询记录] 成功: ', res)
       },
@@ -128,9 +139,118 @@ Page({
       }
     })
 
-    this.setData({
-      kind: 1,
+  },
+
+  chooseType: function (e) {
+    console.log(this.data)
+    console.log('选择类型: ', e.currentTarget.dataset.typeid)
+   // var that=this;
+  //  var typeId = e.currentTarget.dataset.typeid;
+   // let cateid=e.category.id;
+  //  wx.navigateTo({
+    // url: 'sendMessage/sendMessage?typeId'="&category.id="+category.id
+  //})
+     //var newTypeId = e.currentTarget.id
+   // var typeId = JSON.parse(e.Typeid);
+    
+   this.setData({
+     typeId: e.currentTarget.dataset.typeid,   
     })
   },
+
+ /* onShow: function () {
+    var that = this
+    wx.request({
+      url: app.data.apiUrl + 'sendMessage/' + that.data.isList + '/' + that.data.num,
+      success: function (res) {
+        that.setData({
+          queryResult: res.data.data
+        })
+     }
+    })
+  },*/
+    
+  goToDetail: function (e) {
+    console.log('../detail/detail?Message=' + JSON.stringify(e.currentTarget.dataset.message))
+    wx.navigateTo({
+      url: '../detail/detail?Message=' + JSON.stringify(e.currentTarget.dataset.message)
+    })
+  },
+
+  onQuery: function () { /*获得我的消息*/
+    const db = wx.cloud.database()
+    // 查询当前用户所有的 counters
+    db.collection('message').where({
+      _openid: app.globalData.openid
+    }).get({
+      success: res => {
+        this.setData({
+          queryResult: res.data
+        })
+        console.log('[数据库] [查询记录] 成功: ', app.globalData.openid)
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      }
+    })
+  },
+
+  goToIndex: function (param) { /*回到首页*/
+    // 获取交易消息
+    const db = wx.cloud.database()
+    // 查询当前用户所有的 counters
+    db.collection('message').where({
+      isSupply: this.data.isSupply,
+      //typeid:this.data.typeId
+    }).get({
+      success: res => {
+        this.setData({
+          queryResult: res.data,
+          isIndex: true,
+        })
+        console.log('[数据库] [查询记录] 成功: ', res)
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      }
+    })
+
+  },
+
+  goToSendMessage: function (param) {
+    wx.navigateTo({ url: '../sendMessage/sendMessage', });
+  },
+  goToMyMessage: function () { /**到我的消息页 */
+
+    const db = wx.cloud.database()
+    // 查询当前用户所有的 counters
+    db.collection('message').where({
+      _openid: app.globalData.openid,
+    }).get({
+      success: res => {
+        this.setData({
+          queryResult: res.data,
+          isIndex: false,
+        })
+        console.log('[数据库] [查询记录] 成功: ', app.globalData.openid)
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      }
+    })
+  },
+
 
 })

@@ -57,7 +57,7 @@ textarea {
  .addImv .upFile .closeImv {  position: absolute;  right: 0rpx;  top: 0rpx;  width: 50rpx;  height: 50rpx;}
 
 .sureRelease {
-  background-color: #e44178;
+  background-color:#FA8072;
   color: white;
   position: fixed;
   width: 100%;
