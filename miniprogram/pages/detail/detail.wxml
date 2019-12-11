@@ -1,0 +1,54 @@
+<!--index.wxml-->
+<!-- <view class="container"> -->
+
+  <view class="message">
+    <view class="userinfo">
+      <image class="userinfo-avatar" src="{{message.userInfo.avatarUrl}}" style="height:30rpx, width:30rpx"></image>
+      <text class="userinfo-nickname">{{message.userInfo.nickName}}</text>
+    </view>
+    <view class="messageTitle" bindtap="goToDetail" data-message="{{item}}">
+      {{message.title}}
+    </view>
+  </view>
+
+  <!-- 消息文字内容 -->
+  <view class="messageText">
+    {{message.message}}
+  </view>
+
+  <!-- 消息图片 -->
+  <view class="imageBox" wx:for="{{filePaths}}" wx:for-index="idx" wx:for-item="item">
+    <image class="messageImage" src="{{item}}"></image>
+  </view>
+
+  <!-- 已有评论块 -->
+  <view class="commentSections" wx:for="{{message.commentsSection}}" wx:for-index="i" wx:for-item="itemi">
+
+    <!-- 已有评论条 -->
+    <view class="commentSection" wx:for="{{itemi.comments}}" wx:for-index="j" wx:for-item="itemj">
+
+      <view wx:if="{{j==0}}" style="width: 100%; height: 10rpx; background-color: black"> </view>
+
+      <view class="comment" style="{{j==0? 'font-size: large' : 'font-size: medium'}}">
+        {{i+' '+j+' '+itemj.message}}
+      </view>
+
+    </view>
+
+    <view class="newCommentBox">
+      <input class="newComment" type='text' value='{{}}' bindblur='titleBlur' data-id="{{i}}"></input>
+      <button class="newCommentSend" bindtap="sendComment">发送</button>
+    </view>
+
+  </view>
+
+  <view style="width: 100%; height: 10rpx; background-color: black"> </view>
+
+  <view class="commentSections">
+    <view class="newCommentBox">
+      <input class="newComment" type='text' value='{{}}' bindblur='titleBlur' data-id="{{-1}}" style="font-size: large"></input>
+      <button class="newCommentSend" bindtap="sendComment">发送</button>
+    </view>
+  </view>
+
+<!-- </view> -->

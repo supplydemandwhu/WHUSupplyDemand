@@ -2,7 +2,7 @@
 const app = getApp()
 Page({
   data: {
-    typeName : ["全部", "旧书", "二手车", "工具", "宿舍用品", "零食", "生活用品", "拼车", "跑腿", "打印", "活动"],
+    typeName: ["全部", "旧书", "二手车", "工具", "宿舍用品", "零食", "生活用品", "拼车", "跑腿", "打印", "活动", "其它"],
     userInfo: {
       avatarUrl: '/images/user-unlogin.png',
     },
@@ -12,9 +12,29 @@ Page({
     isSupply: -1,
     typeId: 0,
     queryResult: '',
+
+
+
+
+    imgUrls: [
+      '/images/1.jpg',
+      '/images/2.jpg',
+      '/images/5.jpg',
+      '/images/3.jpg',
+      '/images/4.jpg'
+    ],
+    indicatorDots: true,
+    autoplay: true,
+    interval: 5000,
+    duration: 500,
+    circular: true,
+
+
+
+
   },
 
-  onLoad: function() {
+  onLoad: function () {
     if (!wx.cloud) {
       wx.redirectTo({
         url: '../chooseLib/chooseLib',
@@ -40,24 +60,24 @@ Page({
         })
       }
     }),
-    
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              console.log("已授权 直接获取用户信息")
-              this.setData({
-                userInfo: res.userInfo
-              })
-              app.globalData.userInfo = res.userInfo
-            }
-          })
+
+      // 获取用户信息
+      wx.getSetting({
+        success: res => {
+          if (res.authSetting['scope.userInfo']) {
+            // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+            wx.getUserInfo({
+              success: res => {
+                console.log("已授权 直接获取用户信息")
+                this.setData({
+                  userInfo: res.userInfo
+                })
+                app.globalData.userInfo = res.userInfo
+              }
+            })
+          }
         }
-      }
-    })
+      })
 
   },
 
@@ -134,6 +154,13 @@ Page({
     })
   },
 
+  goToDetail: function (e) {
+    console.log('../detail/detail?Message=' + JSON.stringify(e.currentTarget.dataset.message))
+    wx.navigateTo({
+      url: '../detail/detail?Message=' + JSON.stringify(e.currentTarget.dataset.message)
+    })
+  },
+
   onQuery: function () { /*获得我的消息*/
     const db = wx.cloud.database()
     // 查询当前用户所有的 counters
@@ -205,8 +232,34 @@ Page({
         })
         console.error('[数据库] [查询记录] 失败：', err)
       }
+
     })
+
   },
+
+
+
+  //删除
+
+  todelete: function (e) {
+
+    const index = e.currentTarget.dataset.index;
+    var queryresult = this.data.queryresult;
+    list.splice(index, 1); // 删除购物车列表里这个商品
+    this.setData({
+      queryresult: res.data
+    });
+    if (!queryresult.length) { // 如果购物车为空
+      this.setData({
+        hasList: false // 修改标识为false，显示购物车为空页面
+      })
+    }
+    }
+
+
+
+
+
 
 
 })

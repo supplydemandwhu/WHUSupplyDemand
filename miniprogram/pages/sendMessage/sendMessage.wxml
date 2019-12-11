@@ -33,13 +33,13 @@
       <view class='upImv_text'>上传具体图片</view>    
       <view class="addImv">      
         <!--这个是已经选好的图片-->      
-        <view wx:for="{{detail}}" wx:key="key" class="upFile" bindtap="showImageDetail" style="border-radius: 5px" data-id="{{index}}">        
+        <view wx:for="{{imagePaths}}" wx:key="key" class="upFile" bindtap="showImageDetail" style="border-radius: 5px" data-id="{{index}}">        
           <image class="itemImv" src="{{item}}"></image>        
           <!--删除图片按钮-->
           <image class="closeImv" src="deleteImage.jpg" mode="scaleToFill" catchtap="deleteImvDetail" data-id="{{index}}"></image> 
         </view>       
         <!--这个是选择图片-->      
-        <view class="upFile" bindtap="chooseDetail" style="border-radius: 5px" wx:if="{{detail.length < 3}}">      
+        <view class="upFile" bindtap="chooseDetail" style="border-radius: 5px" wx:if="{{imagePaths.length < 3}}">      
           <image class="itemImv" src="chooseImage.jpg"></image>      <!--选择图片按钮-->   
         </view>       
       </view>
