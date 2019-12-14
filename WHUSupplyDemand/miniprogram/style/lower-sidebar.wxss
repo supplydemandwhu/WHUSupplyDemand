@@ -1,0 +1,28 @@
+/**lower-sidebar.wxss**/
+#lower-sidebar {
+  position: absolute;
+  bottom: 0;
+  background-color:  white;
+  position: fixed;
+  height: 10%;
+  width: 100%;
+  /* border: 1px solid rgba(0, 0, 0, 0.1); */
+  /* border-left: none;
+  border-right: none; */
+  display: flex; /*显示在一行*/
+  margin: 0;
+  padding:0;
+  flex-direction: row;
+  align-items: center; /*非主轴方向 居中*/
+  justify-content: center; /*主轴方向（横向） 居中*/
+  /*transition: all 300ms ease;*/
+}
+
+.lower-button {
+  /* margin-left: 5%; */
+  
+  width: 33%;
+  border: gray solid 1rpx;
+  /* background-color: pink; */
+
+}

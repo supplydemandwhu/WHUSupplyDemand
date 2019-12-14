@@ -1,0 +1,280 @@
+<!--index.wxml-->
+<view class="container">
+
+  <!-- 供需按钮 -->
+  <view id="upper-sidebar">
+    <!-- 用户 头像 -->
+    <button 
+      open-type="getUserInfo" 
+      bindgetuserinfo="onGetUserInfo"
+      id="userinfo-avatar"
+      style="background-image: url({{userInfo.avatarUrl ? userInfo.avatarUrl : '/images/user-unlogin.png'}})"
+    ></button>
+
+    <view wx:if="{{isIndex==true}}">
+      <button class="upper-button" id="button-supply" bindtap="getSupply" style="font-weight: {{isSupply==1?'bold':'normal'}}">供</button>
+      <button class="upper-button" id="button-demand" bindtap="getDemand" style="font-weight: {{isSupply==0?'bold':'normal'}}">需</button>
+    </view>
+   
+   <!--轮播图-->
+  <swiper class="home-swiper" wx:if="{{isIndex==true}}"indicator-dots="{{indicatorDots}}"
+  autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
+    <block wx:for="{{imgUrls}}">
+      <swiper-item>
+      <navigator>
+        <image src="{{item}}" class="slide-image"/>
+        </navigator>
+      </swiper-item>
+    </block>
+  </swiper>
+
+</view>
+
+  <!-- 分类 -->
+  <scroll-view  scroll-x="true" id="middle-scroll-sidebar" class="fenlei"wx:if="{{isIndex==true}}">
+      <button wx:for="{{typeName}}" wx:for-index="idx" wx:for-item="item" size="mini"  bindtap="chooseType" data-typeid="{{idx}}" style="font-weight: {{typeId==idx?'bold':'normal'}}">{{item}}</button>
+  </scroll-view>
+  
+
+    <!--
+    <view wx:if="{{isIndex==true}}">
+      <button class="upper-button" id="button-supply" bindtap="getSupply" style="font-weight: {{isSupply==1?'bold':'normal'}}">供</button>
+      <button class="upper-button" id="button-demand" bindtap="getDemand" style="font-weight: {{isSupply==0?'bold':'normal'}}">需</button>
+    </view>
+    <!-- <view wx:else>
+      欢迎，{{userInfo.nickName}}
+    </view> 
+    
+  </view>
+ -->
+  
+  <!-- TODO 分类 
+  <scroll-view  scroll-x="true" id="middle-scroll-sidebar" wx:if="{{isIndex==true}}">
+      <button wx:for="{{typeName}}" wx:for-index="idx" wx:for-item="item" size="mini" type="default" bindtap="chooseType" data-typeid="{{idx}}" style="font-weight: {{typeId==idx?'bold':'normal'}}">{{item}}
+      </button>
+  </scroll-view>
+  -->
+
+
+
+<view wx:if="{{isIndex==false}}">
+     <button class="xiaoxiliebiao" bintap="onQuery">消息列表</button>
+</view>
+
+
+  <!-- 我的 查询记录 
+  <view id="middle-sidebar" wx:else>
+    <button size="mini" class="upper-button" id="xiaoxiliebiao" bindtap="onQuery">消息列表</button>
+  </view>-->
+
+  <!-- 全部消息列表 -->
+  <scroll-view class="messagebox1" wx:if="{{isIndex==true && isSupply==-1}}"  scroll-y='true'>
+  点击“供”或“需”显示消息
+  </scroll-view>
+
+  <scroll-view class="messagebox1" wx:elif="{{isIndex==true}}"  scroll-y='true'> <!-- 供给/需求 -->
+    <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" wx:key="item._id">
+      <view class="message" wx:if="{{item.isSupply==isSupply && (typeId==0 || item.typeId==typeId)}}">
+        <view class="userinfo">
+          <image class="userinfo-avatar" src="{{item.userInfo.gender == 1 ? '/images/girl.png': '/images/boy.png'}}" style="height:30rpx, width:30rpx"></image>
+          <text class="userinfo-nickname">{{item.userInfo.nickName}}</text>
+        </view>
+        <view class="messageTitle" bindtap="goToDetail" data-message="{{item}}">
+          {{item.title}}
+        </view>
+      </view>
+    </view>
+
+<!--                                             -->
+
+ 
+  
+ <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" wx:key="item._id">
+      <view class="message" wx:if="{{item.isSupply==isSupply && ((typeId==2||item.typeId==2)) }}">
+        <view class="userinfo">
+          <image class="userinfo-avatar" src="{{item.userInfo.gender== 2 ? '/images/boy.png': '/images/girl.png'}}" style="height:30rpx, width:30rpx"></image>
+          <text class="userinfo-nickname">{{item.userInfo.nickName}}</text>
+        </view>
+        <view class="messageTitle" bindtap="goToDetail" data-message="{{item}}">
+          {{item.title}}
+        </view>
+      </view>
+     </view>
+
+ <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" wx:key="item._id">
+      <view class="message" wx:if="{{item.isSupply==isSupply && ((typeId==3||item.typeId==3)) }}">
+        <view class="userinfo">
+          <image class="userinfo-avatar" src="{{item.userInfo.gender== 2 ? '/images/boy.png': '/images/girl.png'}}" style="height:30rpx, width:30rpx"></image>
+          <text class="userinfo-nickname">{{item.userInfo.nickName}}</text>
+        </view>
+        <view class="messageTitle" bindtap="goToDetail" data-message="{{item}}">
+          {{item.title}}
+        </view>
+      </view>
+     </view>
+
+ <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" wx:key="item._id">
+      <view class="message" wx:if="{{item.isSupply==isSupply && ((typeId==4||item.typeId==4)) }}">
+        <view class="userinfo">
+          <image class="userinfo-avatar" src="{{item.userInfo.gender== 2 ? '/images/boy.png': '/images/girl.png'}}" style="height:30rpx, width:30rpx"></image>
+          <text class="userinfo-nickname">{{item.userInfo.nickName}}</text>
+        </view>
+        <view class="messageTitle" bindtap="goToDetail" data-message="{{item}}">
+          {{item.title}}
+        </view>
+      </view>
+     </view>
+
+ <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" wx:key="item._id">
+      <view class="message" wx:if="{{item.isSupply==isSupply && ((typeId==5||item.typeId==5)) }}">
+        <view class="userinfo">
+          <image class="userinfo-avatar" src="{{item.userInfo.gender== 2 ? '/images/boy.png': '/images/girl.png'}}" style="height:30rpx, width:30rpx"></image>
+          <text class="userinfo-nickname">{{item.userInfo.nickName}}</text>
+        </view>
+        <view class="messageTitle" bindtap="goToDetail" data-message="{{item}}">
+          {{item.title}}
+        </view>
+      </view>
+     </view>
+
+ <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" wx:key="item._id">
+      <view class="message" wx:if="{{item.isSupply==isSupply && ((typeId==6||item.typeId==6)) }}">
+        <view class="userinfo">
+          <image class="userinfo-avatar" src="{{item.userInfo.gender== 2 ? '/images/boy.png': '/images/girl.png'}}" style="height:30rpx, width:30rpx"></image>
+          <text class="userinfo-nickname">{{item.userInfo.nickName}}</text>
+        </view>
+        <view class="messageTitle" bindtap="goToDetail" data-message="{{item}}">
+          {{item.title}}
+        </view>
+      </view>
+     </view>
+
+      <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" wx:key="item._id">
+      <view class="message" wx:if="{{item.isSupply==isSupply && ((typeId==7||item.typeId==7)) }}">
+        <view class="userinfo">
+          <image class="userinfo-avatar" src="{{item.userInfo.gender== 2 ? '/images/boy.png': '/images/girl.png'}}" style="height:30rpx, width:30rpx"></image>
+          <text class="userinfo-nickname">{{item.userInfo.nickName}}</text>
+        </view>
+        <view class="messageTitle" bindtap="goToDetail" data-message="{{item}}">
+          {{item.title}}
+        </view>
+      </view>
+     </view>
+
+ <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" wx:key="item._id">
+      <view class="message" wx:if="{{item.isSupply==isSupply && ((typeId==8||item.typeId==8)) }}">
+        <view class="userinfo">
+          <image class="userinfo-avatar" src="{{item.userInfo.gender== 2 ? '/images/boy.png': '/images/girl.png'}}" style="height:30rpx, width:30rpx"></image>
+          <text class="userinfo-nickname">{{item.userInfo.nickName}}</text>
+        </view>
+        <view class="messageTitle" bindtap="goToDetail" data-message="{{item}}">
+          {{item.title}}
+        </view>
+      </view>
+     </view>
+
+      <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" wx:key="item._id">
+      <view class="message" wx:if="{{item.isSupply==isSupply && (typeId==9||item.typeId==9) }}">
+        <view class="userinfo">
+          <image class="userinfo-avatar" src="{{item.userInfo.gender== 2 ? '/images/boy.png': '/images/girl.png'}}" style="height:30rpx, width:30rpx"></image>
+          <text class="userinfo-nickname">{{item.userInfo.nickName}}</text>
+        </view>
+        <view class="messageTitle" bindtap="goToDetail" data-message="{{item}}">
+          {{item.title}}
+        </view>
+      </view>
+     </view>
+
+ <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" wx:key="item._id">
+      <view class="message" wx:if="{{item.isSupply==isSupply && (typeId==10||item.typeId==10) }}">
+        <view class="userinfo">
+          <image class="userinfo-avatar" src="{{item.userInfo.gender== 2 ? '/images/boy.png': '/images/girl.png'}}" style="height:30rpx, width:30rpx"></image>
+          <text class="userinfo-nickname">{{item.userInfo.nickName}}</text>
+        </view>
+        <view class="messageTitle" bindtap="goToDetail" data-message="{{item}}">
+          {{item.title}}
+        </view>
+      </view>
+     </view>
+
+      <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" wx:key="item._id">
+      <view class="message" wx:if="{{item.isSupply==isSupply && ((typeId==11||item.typeId==11)) }}">
+        <view class="userinfo">
+          <image class="userinfo-avatar" src="{{item.userInfo.gender== 2 ? '/images/boy.png': '/images/girl.png'}}" style="height:30rpx, width:30rpx"></image>
+          <text class="userinfo-nickname">{{item.userInfo.nickName}}</text>
+        </view>
+        <view class="messageTitle" bindtap="goToDetail" data-message="{{item}}">
+          {{item.title}}
+        </view>
+      </view>
+     </view>
+    </scroll-view>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 我的消息 -->
+<!--  <scroll-view class="messagebox2" wx:elif="{{isIndex==false}}"  scroll-y='true'>  
+    <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" wx:key="item._id">
+      <view class="message" wx:if="{{item.isSupply==isSupply || (typeId==0 || item.typeId==typeId)}}">
+
+        <view class="userinfo">
+          <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" style="height:30rpx, width:30rpx"></image>
+          <text class="userinfo-nickname">{{item.userInfo.nickName}}</text>
+        </view>
+
+        <view class="messageTitle" bindtap="goToDetail" data-message="{{item}}">
+          {{item.title}}
+        </view>
+
+        <button class="button" id="deleteit"  bindtap="todelete" data-message="{{item}}">
+        删除
+        </button>
+
+      </view>
+
+
+
+    </view>
+  </scroll-view> --> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- 下边栏 -->
+  <!--<view id="lower-sidebar">
+
+    <button class="lower-button" bindtap="goToIndex">首页</button>
+
+    <button class="lower-button" bindtap="goToSendMessage">发布消息</button>
+    
+    <button class="lower-button" bindtap="goToMyMessage">我的</button>
+
+  </view>-->
+</view>
