@@ -1,0 +1,19 @@
+<!--component/detailCard/detailCard.wxml-->
+<view class="blog">
+  <view class="blog-title">
+    <image class="blog-portrait" src="{{blog.avatarUrl}}"></image>
+    <view class="blog-box">
+      <view class="blog-nickName">{{blog.nickName}}</view>
+      <view class="blog-time">{{_createTime}}</view>
+    </view>
+  </view>
+  <view class="blog-content">
+    <view class="blog-title">{{blog.title}}</view>
+    <view class="blog-message">{{blog.message}}</view>
+  </view>
+  <view class="blog-img">
+    <block wx:for="{{blog.images}}" wx:key="{{index}}">
+      <image class="img" src="{{item}}" mode="aspectFill" catch:tap="onPreviewImage" data-imgsrc="{{item}}" data-imgs="{{blog.images}}"></image>
+    </block>
+  </view>
+</view>

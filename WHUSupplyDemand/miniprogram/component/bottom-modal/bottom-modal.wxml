@@ -1,0 +1,9 @@
+<!--component/bottom-modal/bottom-modal.wxml-->
+<!--组件样式隔离，无法使用外部icon样式-->
+<view class="modal" hidden="{{!modalShow}}">
+  <view class="panel">
+      <icon class="iconfont icon-shanchu" bind:tap="onClose"></icon>
+      <!-- slot插槽  具名插槽-->
+      <slot name="modal-content"></slot>
+  </view>
+</view>
