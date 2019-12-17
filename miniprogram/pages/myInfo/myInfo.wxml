@@ -1,0 +1,45 @@
+<!--消息还没有办法显示出来-->
+<!--需要得到用户信息（头像）
+这个用户名下的所有消息列表
+-->
+<view class="container">
+<!-- 用户 头像 -->
+  <view id="upper-sidebar">
+    <button 
+      open-type="getUserInfo" 
+      bindgetuserinfo="onGetUserInfo"
+      id="userinfo-avatar"
+      style="background-image: url({{userInfo.avatarUrl ? userInfo.avatarUrl : '/images/user-unlogin.png'}})"
+    ></button>
+  </view>
+
+  <button class="xiaoxiliebiao" bintap="onQuery">消息列表</button>
+
+  <!-- 我的消息 -->
+  <scroll-view class="messagebox2"  scroll-y='true'>  
+    <view wx:if="{{queryResult.length>0}}" wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" wx:key="item._id">
+      <view class="message" wx:if="{{item.isHidden}}=={{false}}">
+
+        <view class="userinfo" bindtap="goToDetail">
+          <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" style="height:30rpx, width:30rpx"></image>
+          <text class="userinfo-nickname">{{item.userInfo.nickName}}</text>
+        </view>
+      
+        <view wx:if="{{item.isSupply==true}}" class="messageTitle" bindtap="goToDetail" data-message="{{item}}">
+          [供]{{item.title}}
+        </view>
+        <view wx:else class="messageTitle" bindtap="goToDetail" data-message="{{item}}">
+          [需]{{item.title}}
+        </view>
+
+        <button class="button" id="deleteit"  bindtap="onDelete" data-message="{{item}}">
+        删除
+        </button>
+      </view>
+    </view>
+    <view wx:if="{{queryResult.length==0}}">
+      <text class="noMessage">还没有发布任何供需消息哦~</text>
+    </view>
+  </scroll-view>  
+
+</view>

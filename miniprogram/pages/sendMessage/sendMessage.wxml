@@ -26,31 +26,32 @@
     <view class="title_text">
       <text>详细内容：</text>
     </view>
-    <textarea name="info" class='textarea' value='{{info}}' bindblur='infoBlur'></textarea>
+    <textarea name="info" class='textarea' placeholder="不要忘了写自己的联系方式哟……" value='{{info}}' bindblur='infoBlur'></textarea>
 
         
     <view class='upImv'>    
       <view class='upImv_text'>上传具体图片</view>    
       <view class="addImv">      
         <!--这个是已经选好的图片-->      
-        <view wx:for="{{detail}}" wx:key="key" class="upFile" bindtap="showImageDetail" style="border-radius: 5px" data-id="{{index}}">        
-          <image class="itemImv" src="{{item}}"></image>        
+        <view wx:for="{{imagePaths}}" wx:key="key" class="upFile" style="border-radius: 5px" data-id="{{index}}">        
+          <image class="itemImv" src="{{item}}" bindtap="showImageDetail" data-imgsrc="{{item}}"></image>        
           <!--删除图片按钮-->
           <image class="closeImv" src="deleteImage.jpg" mode="scaleToFill" catchtap="deleteImvDetail" data-id="{{index}}"></image> 
         </view>       
         <!--这个是选择图片-->      
-        <view class="upFile" bindtap="chooseDetail" style="border-radius: 5px" wx:if="{{detail.length < 3}}">      
-          <image class="itemImv" src="chooseImage.jpg"></image>      <!--选择图片按钮-->   
+        <view class="upFile" bindtap="chooseDetail" style="border-radius: 5px" wx:if="{{imagePaths.length < 3}}">      
+          <image class="itemImv" src="chooseImage.jpg" ></image>      <!--选择图片按钮-->   
         </view>       
       </view>
     </view>
-
+  
+  <view class="classified">
     <radio-group class="is-supply-group" bindchange="isSupplyChange">
       <radio value="supply" checked/>提供
       <radio value="demand"/>需求
     </radio-group>
-
-    <button size="mini" class="sureRelease" form-type="submit"> 提交 </button>
+    <button class="sureRelease" form-type="submit">提交</button>
+  </view>
   </view>
 </form>
 

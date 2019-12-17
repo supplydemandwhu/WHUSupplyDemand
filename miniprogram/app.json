@@ -1,15 +1,37 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/sendMessage/sendMessage"
+    "pages/sendMessage/sendMessage",
+    "pages/myInfo/myInfo",
+    "pages/detail/detail"
     
   ],
   "window": {
-    "backgroundColor": "#F6F6F6",
+    "backgroundColor": "#6495ED",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "云开发 QuickStart",
+    "navigationBarBackgroundColor": "#6495ED",
+    "navigationBarTitleText": "武大供需撮合",
     "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "selectedColor":"#1E90FF",
+    "list": [{
+      "pagePath": "pages/index/index",
+      "text": "首页",
+      "iconPath": "images/shouye.png", 
+      "selectedIconPath": "images/shouye-active.png"
+    },{
+      "pagePath": "pages/sendMessage/sendMessage",
+      "text": "发布",
+      "iconPath": "images/fabu.png",
+      "selectedIconPath": "images/fabu-active.png"
+    },{
+      "pagePath": "pages/myInfo/myInfo",
+      "text": "我的",
+      "iconPath": "images/wode.png",
+      "selectedIconPath": "images/wode-active.png"
+    }
+    ]
   },
   "sitemapLocation": "sitemap.json"
 }
