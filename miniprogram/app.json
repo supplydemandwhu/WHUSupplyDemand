@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/sendMessage/sendMessage"
+    "pages/sendMessage/sendMessage",
+    "pages/detail/detail"
     
   ],
   "window": {
