@@ -536,8 +536,4 @@ page {
   height: 324rpx;
 }
 
-.noMessage{
-  line-height: 300px;
-  color: gray;
-  font-size: 35rpx;
-}
+

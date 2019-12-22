@@ -1,6 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "x-bottom-modal": "/component/bottom-modal/bottom-modal"
-  }
-}
