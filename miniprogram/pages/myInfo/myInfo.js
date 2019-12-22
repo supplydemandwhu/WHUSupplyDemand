@@ -103,18 +103,31 @@ Page({
   //删除
 
   onDelete: function (e) {
-
+    // 删除购物车列表里这个商品
     const index = e.currentTarget.dataset.index;
-    var queryresult = this.data.queryresult;
-    list.splice(index, 1); // 删除购物车列表里这个商品
+    var queryResult = this.data.queryResult;
+    queryResult.splice(index, 1); 
     this.setData({
-      queryresult: res.data
+      queryResult: queryResult
     });
-    if (!queryresult.length) { // 如果购物车为空
+    if (!queryResult.length) { // 如果购物车为空
       this.setData({
         hasList: false // 修改标识为false，显示购物车为空页面
       })
     }
+
+    // 删除云端数据库里这个商品
+    const id = e.currentTarget.dataset.id;
+    const db = wx.cloud.database()
+    db.collection('message').doc(id)
+    .update({
+      data: {
+        isHidden: true
+      },
+      success: function (res) {
+        console.log(res.data)
+      }
+    })
   }
 
 
