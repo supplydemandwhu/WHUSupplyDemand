@@ -74,7 +74,7 @@
 
   <scroll-view class="messagebox1" wx:elif="{{isIndex==true}}"  scroll-y='true'> <!-- 供给/需求 -->
     <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" wx:key="item._id">
-      <view class="message" wx:if="{{item.isSupply==isSupply && (typeId==0 || item.typeId==typeId)}}">
+      <view class="message" wx:if="{{item.isSupply==isSupply && (typeId==0 || item.typeId==typeId) && !item.isHidden}}">
         <view class="userinfo">
           <image class="userinfo-avatar" src="{{item.avatarUrl}}" style="height:30rpx, width:30rpx"></image>
         </view>

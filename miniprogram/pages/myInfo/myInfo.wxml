@@ -18,7 +18,7 @@
   <!-- 我的消息 -->
   <scroll-view class="messagebox2"  scroll-y='true'>  
     <view wx:for="{{queryResult}}" wx:for-index="idx" wx:for-item="item" wx:key="item._id">
-      <view class="message" wx:if="{{item.isHidden}}=={{false}}">
+      <view class="message" wx:if="{{item.isHidden==false}}">
 
         <view class="userinfo" bindtap="goToDetail">
           <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" style="height:30rpx, width:30rpx"></image>
