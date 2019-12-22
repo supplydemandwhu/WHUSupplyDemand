@@ -1,15 +1,17 @@
 const app = getApp()
-
+let userInfo = {}
+let title = ''
+let fileIds = []
 Page({
 
   data: {
     openid: '',
     productID: 0,
 
-    title: "",
+    //删掉了title
 
     categoryInd: 0,
-    category: [{ name: "待选择", id: 0 }, { name: "旧书", id: 1 }, { name: "二手车", id: 2 }],
+    category: [{ name: "待选择", id: 0 }, { name: "旧书", id: 1 }, { name: "二手车", id: 2 }, { name: "工具", id: 3 }, { name: "宿舍用品", id: 4 }, { name: "零食", id: 5 }, { name: "生活用品", id: 6 }, { name: "拼车", id: 7 }, { name: "跑腿", id: 8 }, { name: "打印", id: 9 }, { name: "活动", id: 10 },  { name: "其它", id: 11 }],
 
     info: "",
     
@@ -24,7 +26,16 @@ Page({
   },
 
   onLoad: function (options) {
+    /*if (app.globalData.openid) {
+      this.setData({
+        openid: app.globalData.openid,
+        productID: options.productID,
+        timeStamp: new Date().getTime(),
+      })
+    }*/
+    console.log(app.globalData)
     if (app.globalData.openid) {
+      userInfo = app.globalData.userInfo
       this.setData({
         openid: app.globalData.openid,
         productID: options.productID,
@@ -57,17 +68,39 @@ Page({
   /**发布提交 */
   formSubmit(e) {
     let that = this
-    if (e.detail.value.title === "") { wx.showToast({ title: '请输入标题', icon: "none", duration: 1000, mask: true, }) }
-    else if (e.detail.value.title.length > 20) { wx.showToast({ title: '标题不得大于20字', icon: "none", duration: 1000, mask: true, }) }
-    else if (that.data.categoryInd === 0) { wx.showToast({ title: '请选择商品类别', icon: "none", duration: 1000, mask: true, }) }
+    if (e.detail.value.title === "") { 
+      wx.showToast({ 
+        title: '请输入标题', 
+        icon: "none", 
+        duration: 1000, 
+        mask: true, }) 
+        }
+    else if (e.detail.value.title.length > 20) { 
+      wx.showToast({ 
+        title: '标题不得大于20字', 
+        icon: "none", 
+        duration: 1000, 
+        mask: true, }) }
+    else if (that.data.categoryInd === 0) { 
+      wx.showToast({ 
+        title: '请选择商品类别', 
+        icon: "none", 
+        duration: 1000, 
+        mask: true, }) }
     else if (e.detail.value.info === "") {
-      wx.showToast({ title: '请输入详细内容', icon: "none", duration: 1000, mask: true, })
+      wx.showToast({ 
+        title: '请输入详细内容', 
+        icon: "none", 
+        duration: 1000, 
+        mask: true, })
     }
     else {
       wx.showModal({
-        title: '提示', content: '确定发布商品', success(res) {
+        title: '提示', 
+        content: '确定发布商品', 
+        success(res) {
           if (res.confirm) {
-            that.sureRelease(e); //发布
+            that.send(e); //发布
           }
         }
       })
@@ -76,38 +109,50 @@ Page({
 
 
   /**确认发布 */
-  sureRelease(e) {
+send(e) {
+    //数据-->云数据库
+    //数据库：内容（title、categoryInd、info、isSupply）、图片（fileID）、openid、昵称、头像、时间
+    //图片-->云存储 返回fileID 云文件ID
     let that = this
+  
+    wx.showLoading({
+      title: '发布中……',
+    })
 
     const db = wx.cloud.database()
     db.collection('message').add({
       data: {
+        ...userInfo,
         isSupply: that.data.isSupply,
         isInProgress: true,
         isHidden: false,
-        userInfo: {
-          avatarUrl: '',
-          nickName: ''
-        },
-
+        createTime: db.serverDate(),//取到服务端的时间
         title: that.data.title,
         type: that.data.categoryInd,
         message: that.data.info,
-        images: that.data.cloudPaths,
+        images: fileIds,
         commentsSection: []
       },
+
       success: res => {
         // 在返回结果中会包含新创建的记录的 _id
         /*this.setData({
           counterId: res._id,
           count: 1
         })*/
+        wx.hideLoading()
         wx.showToast({
           title: '消息发布成功',
         })
         console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+
+        //返回首页，并且刷新首页，最新消息放最上面
+        wx.reLaunch({
+          url: '../index/index',
+        })
       },
       fail: err => {
+        wx.hideLoading()
         wx.showToast({
           icon: 'none',
           title: '消息发布失败'
@@ -115,9 +160,7 @@ Page({
         console.error('[数据库] [新增记录] 失败：', err)
       }
     })
-
   },
-
 
   //选择上传图片
   chooseDetail: function () {
@@ -151,6 +194,7 @@ Page({
               filePath,
               success: res => {
                 console.log('[上传文件] 成功：', res)
+                fileIds = fileIds.concat(res.fileID)
               },
               fail: e => {
                 console.error('[上传文件] 失败：', e)
@@ -202,10 +246,10 @@ Page({
 
   /** 查看大图Detail */
   showImageDetail: function (e) {
-    var detail = this.data.detail;
-    var itemIndex = e.currentTarget.dataset.id;
+    var detail = this.data.imagePaths;
+    var itemIndex = e.target.dataset.imgsrc;
     wx.previewImage({
-      current: detail[itemIndex], // 当前显示图片的http链接      
+      current: itemIndex, // 当前显示图片的http链接      
       urls: detail // 需要预览的图片http链接列表   
     })
   },

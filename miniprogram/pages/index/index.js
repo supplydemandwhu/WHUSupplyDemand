@@ -2,7 +2,7 @@
 const app = getApp()
 Page({
   data: {
-    typeName : ["全部", "旧书", "二手车", "工具", "宿舍用品", "零食", "生活用品", "拼车", "跑腿", "打印", "活动"],
+    typeName: ["全部", "旧书", "二手车", "工具", "宿舍用品", "零食", "生活用品", "拼车", "跑腿", "打印", "活动", "其它"],
     userInfo: {
       avatarUrl: '/images/user-unlogin.png',
     },
@@ -12,9 +12,29 @@ Page({
     isSupply: -1,
     typeId: 0,
     queryResult: '',
+
+
+
+
+    imgUrls: [
+      '/images/1.jpg',
+      '/images/2.jpg',
+      '/images/5.jpg',
+      '/images/3.jpg',
+      '/images/4.jpg'
+    ],
+    indicatorDots: true,
+    autoplay: true,
+    interval: 5000,
+    duration: 500,
+    circular: true,
+
+
+
+
   },
 
-  onLoad: function() {
+  onLoad: function () {
     if (!wx.cloud) {
       wx.redirectTo({
         url: '../chooseLib/chooseLib',
@@ -40,27 +60,37 @@ Page({
         })
       }
     }),
-    
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              console.log("已授权 直接获取用户信息")
-              this.setData({
-                userInfo: res.userInfo
-              })
-              app.globalData.userInfo = res.userInfo
-            }
-          })
+
+      // 获取用户信息
+      wx.getSetting({
+        success: res => {
+          if (res.authSetting['scope.userInfo']) {
+            // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+            wx.getUserInfo({
+              success: res => {
+                console.log("已授权 直接获取用户信息")
+                this.setData({
+                  userInfo: res.userInfo
+                })
+                /*this.onLoginSuccess({
+                  detail:res.userInfo
+                })*/
+                app.globalData.userInfo = res.userInfo
+              }
+            })
+          }
         }
-      }
-    })
+      })
 
   },
-
+  /*尝试传参，失败了
+  onLoginSuccess(event){
+    console.log(event)
+    const detail=event.detail
+    wx.navigateTo({
+      url: `../sendMessage/sendMessage?nickName=${detail.nickName}&avatarUrl=${detail.avatarUrl}`,
+      })
+  },*/
   onGetUserInfo: function (e) { /*弹窗获取用户信息*/
     console.log("弹窗获取信息")
     if (!this.data.logged && e.detail.userInfo) {
@@ -79,7 +109,7 @@ Page({
     // 查询当前用户所有的 counters
     db.collection('message').where({
       isSupply: true,
-    }).get({
+    }).orderBy('createTime', 'desc').get({
       success: res => {
         this.setData({
           queryResult: res.data,
@@ -105,7 +135,7 @@ Page({
     // 查询当前用户所有的 counters
     db.collection('message').where({
       isSupply: false,
-    }).get({
+    }).orderBy('createTime', 'desc').get({
       success: res => {
         this.setData({
           queryResult: res.data,
@@ -141,7 +171,8 @@ Page({
     })
   },
 
-  onQuery: function () { /*获得我的消息*/
+/*
+  onQuery: function () { /*获得我的消息
     const db = wx.cloud.database()
     // 查询当前用户所有的 counters
     db.collection('message').where({
@@ -162,6 +193,7 @@ Page({
       }
     })
   },
+*/
 
   goToIndex: function (param) { /*回到首页*/
     // 获取交易消息
@@ -212,8 +244,34 @@ Page({
         })
         console.error('[数据库] [查询记录] 失败：', err)
       }
+
     })
+
   },
+
+
+
+  //删除
+
+  todelete: function (e) {
+
+    const index = e.currentTarget.dataset.index;
+    var queryresult = this.data.queryresult;
+    list.splice(index, 1); // 删除购物车列表里这个商品
+    this.setData({
+      queryresult: res.data
+    });
+    if (!queryresult.length) { // 如果购物车为空
+      this.setData({
+        hasList: false // 修改标识为false，显示购物车为空页面
+      })
+    }
+    }
+
+
+
+
+
 
 
 })

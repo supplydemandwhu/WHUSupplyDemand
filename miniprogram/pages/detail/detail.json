@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "消息详情",
-  "usingComponents": {}
+  "usingComponents": {
+    "x-detailCard":"/component/detailCard/detailCard",
+    "x-detailCtrl": "/component/detailCtrl/detailCtrl"
+  }
 }
